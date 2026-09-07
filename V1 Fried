@@ -1,1 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crispcraft — Fried Chicken</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --black:   #0e0e0e;
+      --white:   #fafafa;
+      --gold:    #c8963e;
+      --gold-lt: #e8b96a;
+      --grey:    #5a5a5a;
+      --bg-off:  #f5f3ef;
+      --radius:  4px;
+      --max:     1100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(250,250,250,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--grey);
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--black); }
+
+    .nav-order {
+      background: var(--black);
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: var(--radius);
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-order:hover { background: var(--gold) !important; color: var(--white) !important; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.5rem 5rem;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, rgba(200,150,62,0.18) 0%, transparent 65%),
+        linear-gradient(160deg, #1a1614 0%, #0e0e0e 60%);
+    }
+
+    /* decorative lines */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: 0.25;
+      right: 38%;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: var(--max);
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      font-weight: 400;
+    }
+
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      max-width: 12ch;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.5);
+      max-width: 38ch;
+      margin-bottom: 2.8rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--gold-lt); }
+
+    .btn-ghost {
+      display: inline-block;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover { color: var(--white); }
+
+    /* ─── SHARED ─── */
+    section { padding: 6rem 2.5rem; }
+
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 0.9rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-desc {
+      color: var(--grey);
+      max-width: 48ch;
+      margin-bottom: 3.5rem;
+      line-height: 1.75;
+    }
+
+    /* ─── MENU ─── */
+    #menu { background: var(--bg-off); }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5px;
+      background: rgba(0,0,0,0.08);
+      border: 1.5px solid rgba(0,0,0,0.08);
+    }
+
+    .menu-card {
+      background: var(--bg-off);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .menu-card:hover { background: var(--white); }
+
+    .menu-emoji { font-size: 2rem; margin-bottom: 0.4rem; }
+
+    .menu-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .menu-desc {
+      font-size: 0.875rem;
+      color: var(--grey);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .menu-price {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-top: 0.6rem;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      display: flex;
+    }
+
+    .about-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .about-visual {
+      aspect-ratio: 4/5;
+      background: var(--black);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 2rem;
+    }
+
+    .about-visual-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(200,150,62,0.22) 0%, transparent 70%),
+        #1a1614;
+    }
+
+    .about-stat-row {
+      position: relative;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .about-stat strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .about-stat span {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+      margin-top: 0.3rem;
+      display: block;
+    }
+
+    .about-text .section-desc { margin-bottom: 0; }
+
+    .about-divider {
+      width: 2.5rem;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.8rem 0;
+    }
+
+    .about-detail {
+      font-size: 0.875rem;
+      color: var(--grey);
+      line-height: 1.75;
+    }
+
+    /* ─── ORDER CTA ─── */
+    #order {
+      background: var(--black);
+      text-align: center;
+    }
+
+    #order .section-label { text-align: center; }
+    #order .section-title { color: var(--white); }
+
+    #order .section-desc {
+      color: rgba(255,255,255,0.4);
+      margin: 0 auto 2.8rem;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials { background: var(--white); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .testi-card {
+      border: 1px solid rgba(0,0,0,0.09);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    .testi-stars {
+      color: var(--gold);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .testi-text {
+      font-size: 0.95rem;
+      color: var(--black);
+      line-height: 1.72;
+      margin-bottom: 1.4rem;
+    }
+
+    .testi-author {
+      font-size: 0.8rem;
+      color: var(--grey);
+      font-weight: 500;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--bg-off); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-block { margin-bottom: 2rem; }
+
+    .contact-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-value {
+      font-size: 0.95rem;
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .contact-form input,
+    .contact-form textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: var(--radius);
+      background: var(--white);
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--gold); }
+
+    .contact-form textarea { height: 130px; }
+
+    .btn-dark {
+      display: inline-block;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius);
+      transition: background 0.2s;
+      text-align: center;
+    }
+
+    .btn-dark:hover { background: var(--gold); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 2rem 2.5rem;
+      border-top: 1px solid rgba(0,0,0,0.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--grey);
+    }
+
+    footer a { color: var(--grey); text-decoration: none; }
+    footer a:hover { color: var(--black); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      #hero { padding: 0 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+
+      .about-inner,
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+      .about-visual { aspect-ratio: 3/2; }
+
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Crisp<span>craft</span></a>
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#order" class="nav-order">Order Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Handcrafted · Fresh Daily · Boldly Seasoned</p>
+      <h1 class="hero-headline">Fried chicken done right.</h1>
+      <p class="hero-sub">No shortcuts. No freezers. Just birds brined overnight, seasoned deep, and fried to a shatter-crisp finish.</p>
+      <div class="hero-actions">
+        <a href="#order" class="btn-primary">Order Online</a>
+        <a href="#menu" class="btn-ghost">See the menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="section-inner">
+      <p class="section-label">What we serve</p>
+      <h2 class="section-title">The menu</h2>
+      <p class="section-desc">Every item made from scratch. We keep it focused — fewer things done exceptionally well.</p>
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-emoji">🍗</div>
+          <div class="menu-name">Classic Crispy</div>
+          <div class="menu-desc">Bone-in thighs and drumsticks, brined 12 hours in buttermilk and herbs, fried in seasoned oil.</div>
+          <div class="menu-price">From $14</div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-emoji">🔥</div>
+          <div class="menu-name">Nashville Hot</div>
+          <div class="menu-desc">Our signature crispy chicken draped in a cayenne-forward paste. Four heat levels — pick your pain.</div>
+          <div class="menu-price">From $15</div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-emoji">🥪</div>
+          <div class="menu-name">The Sandwich</div>
+          <div class="menu-desc">Crispy fillet, house pickles, slaw, and gold sauce on a brioche bun. Simple and complete.</div>
+          <div class="menu-price">$13</div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-emoji">🍟</div>
+          <div class="menu-name">Sides</div>
+          <div class="menu-desc">Hand-cut fries, mac & cheese, coleslaw, and jalapeño cornbread. Rotating seasonal option weekly.</div>
+          <div class="menu-price">From $5</div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-emoji">📦</div>
+          <div class="menu-name">Family Box</div>
+          <div class="menu-desc">Eight pieces, two large sides, and a half-dozen biscuits. Designed to feed four generously.</div>
+          <div class="menu-price">$49</div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-emoji">🥤</div>
+          <div class="menu-name">Drinks</div>
+          <div class="menu-desc">Housemade lemonade, sweet tea, and rotating craft sodas. No fountains — just good drinks.</div>
+          <div class="menu-price">From $4</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-visual">
+        <div class="about-visual-bg"></div>
+        <div class="about-stat-row">
+          <div class="about-stat">
+            <strong>12h</strong>
+            <span>Brine time</span>
+          </div>
+          <div class="about-stat">
+            <strong>340°</strong>
+            <span>Fry temp</span>
+          </div>
+          <div class="about-stat">
+            <strong>0</strong>
+            <span>Freezers used</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">Our story</p>
+        <h2 class="section-title">Started in a backyard. Stayed the same.</h2>
+        <div class="about-divider"></div>
+        <p class="section-desc">Crispcraft started at block parties with a cast-iron setup and a brine recipe passed down through the family. The shop is new. The method isn't.</p>
+        <p class="about-detail">We source locally where we can, keep the menu tight, and refuse to rush the process. Every batch is monitored by hand. We don't believe in holding trays — if it's been sitting, it's not going out.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER CTA -->
+  <section id="order">
+    <div class="section-inner">
+      <p class="section-label">Ready to eat</p>
+      <h2 class="section-title">Order for pickup or delivery</h2>
+      <p class="section-desc">We're open Tuesday through Sunday, 11am–9pm. Order ahead and skip the wait — or walk in and we'll get you sorted.</p>
+      <a href="#" class="btn-primary" style="font-size:1rem; padding: 1rem 2.4rem;">Order Now</a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-inner">
+      <p class="section-label">What people say</p>
+      <h2 class="section-title">Reviews</h2>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">The crunch on this chicken is something else. I've had fried chicken all over the city and nothing comes close. The Nashville Hot is genuinely hot, which I respect.</p>
+          <div class="testi-author">Marcus D. — Google Review</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">Ordered the family box for a birthday dinner. Everything arrived hot and fresh. The mac and cheese alone is worth the trip. We'll be regulars.</p>
+          <div class="testi-author">Priya L. — Yelp</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">The sandwich is the best I've had, full stop. Brioche bun was perfect, pickles were sharp, and the chicken was juicy all the way through. Rare combo.</p>
+          <div class="testi-author">James T. — Google Review</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div>
+          <p class="section-label">Find us</p>
+          <h2 class="section-title">Come in or reach out</h2>
+          <div style="margin-top: 2.5rem;">
+            <div class="contact-block">
+              <p class="contact-label">Address</p>
+              <p class="contact-value">123 Main Street<br>Your City, State 00000</p>
+            </div>
+            <div class="contact-block">
+              <p class="contact-label">Hours</p>
+              <p class="contact-value">Tuesday – Sunday<br>11:00am – 9:00pm</p>
+            </div>
+            <div class="contact-block">
+              <p class="contact-label">Phone</p>
+              <p class="contact-value">(000) 000-0000</p>
+            </div>
+            <div class="contact-block">
+              <p class="contact-label">Email</p>
+              <p class="contact-value">hello@crispcraft.com</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="section-label">Send a message</p>
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; letter-spacing:-0.01em; margin-bottom:1.8rem; margin-top:0.4rem;">Questions? Catering? Say hi.</h3>
+          <div class="contact-form">
+            <input type="text" placeholder="Your name" />
+            <input type="email" placeholder="Email address" />
+            <textarea placeholder="Your message"></textarea>
+            <button class="btn-dark">Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Crispcraft. All rights reserved.</span>
+    <span>
+      <a href="#">Instagram</a> &nbsp;·&nbsp;
+      <a href="#">Facebook</a> &nbsp;·&nbsp;
+      <a href="#">TikTok</a>
+    </span>
+  </footer>
+
+</body>
+</html>
