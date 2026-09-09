@@ -79,38 +79,16 @@
 
     .nav-order:hover { background: var(--red-lt) !important; }
 
-    /* ─── HERO ─── */
+    /* ─── HERO (FEATURED SHOWCASE) ─── */
     #hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 2.5rem 5rem;
+      justify-content: center;
+      padding: 7rem 2.5rem 3rem;
       background: var(--black);
       position: relative;
       overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(ellipse 55% 55% at 75% 35%, rgba(192,57,43,0.25) 0%, transparent 65%),
-        linear-gradient(150deg, rgba(28,18,16,0.75) 0%, rgba(15,15,15,0.92) 60%),
-        url('https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-72%404x.png?fit=900%2C720&ssl=1');
-      background-size: cover, cover, cover;
-      background-position: center, center, center 30%;
-    }
-
-    /* vertical rule accent */
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 36%;
-      width: 1px;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent 10%, rgba(192,57,43,0.35) 50%, transparent 90%);
     }
 
     .hero-content {
@@ -125,29 +103,22 @@
       font-size: 0.8rem;
       color: var(--red);
       letter-spacing: 0.15em;
-      margin-bottom: 1.3rem;
+      margin-bottom: 1rem;
+      text-align: center;
     }
 
-    .hero-headline {
+    .hero-eyebrow-title {
       font-family: 'Noto Serif KR', serif;
-      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-size: clamp(1.6rem, 3.4vw, 2.4rem);
       font-weight: 700;
       color: var(--white);
-      line-height: 1.05;
+      text-transform: uppercase;
       letter-spacing: -0.02em;
-      max-width: 14ch;
-      margin-bottom: 1.6rem;
+      text-align: center;
+      margin-bottom: 3rem;
     }
 
-    .hero-sub {
-      font-size: 1rem;
-      color: rgba(255,255,255,0.45);
-      max-width: 40ch;
-      margin-bottom: 2.8rem;
-      line-height: 1.75;
-    }
-
-    .hero-actions { display: flex; gap: 1rem; align-items: center; }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; justify-content: center; margin-top: 3rem; }
 
     .btn-primary {
       display: inline-block;
@@ -202,21 +173,124 @@
       font-size: 0.95rem;
     }
 
-    /* ─── FEATURED ROTATOR ─── */
-    #featured {
-      background: var(--black);
-      padding: 3.5rem 2.5rem;
-      border-top: 7px solid var(--red);
-    }
-
-    .fr-header {
+    /* ─── FEATURED ROTATOR (hero showcase) ─── */
+    .fr-wrap {
+      position: relative;
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 2rem;
+      align-items: center;
+      gap: 1.5rem;
     }
 
-    .fr-dots { display: flex; gap: 8px; align-items: center; }
+    .fr-arrow {
+      flex: 0 0 auto;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .fr-arrow:hover {
+      border-color: var(--red);
+      color: var(--white);
+      background: rgba(192,57,43,0.15);
+    }
+
+    .fr-track-wrap { overflow: hidden; flex: 1; }
+
+    .fr-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .fr-slide {
+      min-width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .fr-card {
+      background: #171717;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-top: 4px solid var(--red);
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+      max-width: 720px;
+      min-height: 320px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .fr-card:hover {
+      background: #1e1e1e;
+      transform: scale(1.03) translateY(-6px);
+      box-shadow: 0 26px 50px rgba(0,0,0,0.55);
+    }
+
+    .fr-photo {
+      flex: 0 0 42%;
+      object-fit: cover;
+      width: 42%;
+      min-height: 100%;
+    }
+
+    .fr-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      justify-content: center;
+      padding: 3rem 3rem 2.6rem;
+    }
+
+    .fr-cat {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .fr-name {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+
+    .fr-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.75;
+      max-width: 46ch;
+    }
+
+    .fr-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 0.9rem;
+      background: rgba(192,57,43,0.15);
+      color: var(--red-lt);
+      border: 1px solid rgba(192,57,43,0.3);
+      align-self: flex-start;
+      margin-top: 0.3rem;
+    }
+
+    .fr-dots { display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 2rem; }
 
     .fr-dot {
       width: 8px; height: 8px;
@@ -230,99 +304,12 @@
 
     .fr-dot.active { background: var(--red); transform: scale(1.3); }
 
-    .fr-track-wrap { overflow: visible; }
-
-    .fr-track {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    .fr-slide {
-      min-width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,0.06);
-    }
-
-    .fr-card {
-      background: var(--black);
-      padding: 2rem 1.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      border-top: 3px solid transparent;
-      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease;
-      cursor: pointer;
-      position: relative;
-      z-index: 1;
-    }
-
-    .fr-card:hover {
-      background: #1a1a1a;
-      border-top-color: var(--red);
-      transform: scale(1.08) translateY(-6px);
-      box-shadow: 0 22px 40px rgba(0,0,0,0.55);
-      z-index: 5;
-    }
-
-    .fr-cat {
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--red);
-      font-weight: 700;
-    }
-
-    .fr-name {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.25;
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-    }
-
-    .fr-desc {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.42);
-      line-height: 1.65;
-      flex: 1;
-    }
-
-    .fr-badge {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.3rem 0.7rem;
-      background: rgba(192,57,43,0.15);
-      color: var(--red-lt);
-      border: 1px solid rgba(192,57,43,0.3);
-      margin-top: 0.3rem;
-      align-self: flex-start;
-    }
-
-    .fr-progress {
-      height: 2px;
-      background: rgba(255,255,255,0.08);
-      margin-top: 2rem;
-      border-radius: 1px;
-      overflow: hidden;
-    }
-
-    .fr-bar {
-      height: 100%;
-      background: var(--red);
-      width: 0%;
-      transition: width 0.1s linear;
-    }
-
     @media (max-width: 768px) {
-      .fr-slide { grid-template-columns: 1fr; }
-      .fr-card:hover { transform: scale(1.03) translateY(-3px); }
+      .fr-wrap { gap: 0.6rem; }
+      .fr-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
+      .fr-card { flex-direction: column; min-height: auto; }
+      .fr-photo { width: 100%; flex: 0 0 auto; height: 200px; }
+      .fr-body { padding: 1.8rem 1.6rem 2rem; }
     }
 
     /* ─── MENU ─── */
@@ -762,36 +749,26 @@ section { padding: 5rem 2.5rem; }
     </ul>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO / FEATURED SHOWCASE -->
   <section id="hero">
-    <div class="hero-bg"></div>
     <div class="hero-content">
       <p class="hero-korean">Korean Fried Chicken · 모모 치킨</p>
-      <h1 class="hero-headline">Crispy. Korean. Unforgettable.</h1>
-      <p class="hero-sub">Korean-style fried chicken done with conviction — brined, seasoned, and fried to order. Burgers, rice bowls, soups, and sides made fresh every day.</p>
+      <h1 class="hero-eyebrow-title">Today's featured picks</h1>
+
+      <div class="fr-wrap">
+        <button class="fr-arrow" id="fr-prev" aria-label="Previous item">‹</button>
+        <div class="fr-track-wrap">
+          <div class="fr-track" id="fr-track"></div>
+        </div>
+        <button class="fr-arrow" id="fr-next" aria-label="Next item">›</button>
+      </div>
+
+      <div class="fr-dots" id="fr-dots"></div>
+
       <div class="hero-actions">
         <a href="#order" class="btn-primary">Order Now</a>
         <a href="#menu" class="btn-ghost">See the full menu</a>
       </div>
-    </div>
-  </section>
-
-  <!-- FEATURED ROTATOR -->
-  <section id="featured">
-    <div class="section-inner">
-      <div class="fr-header">
-        <div>
-          <p class="section-label">Today's picks</p>
-          <h2 class="section-title" style="color: var(--white);">Featured items</h2>
-        </div>
-        <div class="fr-dots" id="fr-dots"></div>
-      </div>
-
-      <div class="fr-track-wrap">
-        <div class="fr-track" id="fr-track"></div>
-      </div>
-
-      <div class="fr-progress"><div class="fr-bar" id="fr-bar"></div></div>
     </div>
   </section>
 
@@ -1231,77 +1208,53 @@ section { padding: 5rem 2.5rem; }
       event.target.classList.add('active');
     }
 
-    /* ─── FEATURED ROTATOR ─── */
+    /* ─── FEATURED ROTATOR (manual, no auto-timer) ─── */
     (function() {
-      const slides = [
-        {
-          items: [
-            { cat: "Chicken", name: "Garlic Soy Grilled Chicken", desc: "Glazed in a rich garlic soy marinade. Smoky, savoury, and worth every bite.", badge: "Most ordered" },
-            { cat: "Burgers", name: "Nashville Burger", desc: "Hot-glazed crispy fillet, pickles, and slaw. Brings the heat, stays in balance.", badge: "Customer favourite" },
-            { cat: "Sides", name: "Truffle Mayo Fries", desc: "Crispy fries tossed in truffle mayo. Rich, fragrant, and hard to share.", badge: "Don't sleep on this" }
-          ]
-        },
-        {
-          items: [
-            { cat: "Rice Bowls", name: "Kimchi Chicken Fried Rice", desc: "Wok-fried rice with kimchi, chicken, and sesame oil. Punchy and deeply satisfying.", badge: "Korean classic" },
-            { cat: "Soups", name: "Hot Stone Bulgogi Beef Soup", desc: "Rich bulgogi broth served bubbling in a stone pot. Warming and full of depth.", badge: "Cold weather must" },
-            { cat: "Rice Bowls", name: "Beef Bulgogi Rice", desc: "Tender marinated bulgogi beef over steamed rice with pickled radish.", badge: "Street food staple" }
-          ]
-        },
-        {
-          items: [
-            { cat: "Sides", name: "Rose Toppoki", desc: "Creamy, mildly spicy rice cakes — the version that converts first-timers.", badge: "Converts everyone" },
-            { cat: "Burgers", name: "Momo Beef Bulgogi Burger", desc: "Marinated bulgogi beef patty with signature Korean-inspired toppings.", badge: "Unique build" },
-            { cat: "Drinks", name: "Oreo Milkshake", desc: "Blended Oreo milkshake — rich, creamy, and generous with the cookies.", badge: "Finish strong" }
-          ]
-        }
+      const items = [
+        { cat: "Chicken", name: "Garlic Soy Grilled Chicken", desc: "Glazed in a rich garlic soy marinade. Smoky, savoury, and worth every bite.", badge: "Most ordered", img: "https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-72%404x.png?fit=900%2C720&ssl=1" },
+        { cat: "Burgers", name: "Nashville Burger", desc: "Hot-glazed crispy chicken fillet, pickles, and slaw. Brings the heat, stays in balance.", badge: "Customer favourite", img: "https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-13%404x.png?fit=900%2C869&ssl=1" },
+        { cat: "Rice Bowls", name: "Kimchi Chicken Fried Rice", desc: "Wok-fried rice with kimchi, chicken, and sesame oil. Punchy and deeply satisfying.", badge: "Korean classic", img: "https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-73%404x.png?fit=900%2C721&ssl=1" },
+        { cat: "Sides", name: "Rose Toppoki", desc: "Creamy, mildly spicy rice cakes — the version that converts first-timers.", badge: "Converts everyone", img: "https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-11%404x.png?fit=900%2C867&ssl=1" }
       ];
 
       const track = document.getElementById('fr-track');
       const dotsEl = document.getElementById('fr-dots');
-      const bar = document.getElementById('fr-bar');
+      const prevBtn = document.getElementById('fr-prev');
+      const nextBtn = document.getElementById('fr-next');
 
-      slides.forEach((slide, si) => {
+      items.forEach((item, i) => {
         const slideEl = document.createElement('div');
         slideEl.className = 'fr-slide';
-        slide.items.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'fr-card';
-          card.innerHTML = `
+        const card = document.createElement('div');
+        card.className = 'fr-card';
+        card.innerHTML = `
+          <img class="fr-photo" src="${item.img}" alt="${item.name}" />
+          <div class="fr-body">
             <span class="fr-cat">${item.cat}</span>
             <div class="fr-name">${item.name}</div>
             <p class="fr-desc">${item.desc}</p>
-            <span class="fr-badge">${item.badge}</span>`;
-          slideEl.appendChild(card);
-        });
+            <span class="fr-badge">${item.badge}</span>
+          </div>`;
+        slideEl.appendChild(card);
         track.appendChild(slideEl);
 
         const dot = document.createElement('button');
-        dot.className = 'fr-dot' + (si === 0 ? ' active' : '');
-        dot.addEventListener('click', () => goTo(si));
+        dot.className = 'fr-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
         dotsEl.appendChild(dot);
       });
 
       let current = 0;
-      let elapsed = 0;
-      const INTERVAL = 5000;
       const dots = dotsEl.querySelectorAll('.fr-dot');
 
       function goTo(i) {
-        current = i;
-        elapsed = 0;
-        track.style.transform = `translateX(-${i * 100}%)`;
-        dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+        current = (i + items.length) % items.length;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
       }
 
-      setInterval(() => {
-        elapsed += 100;
-        bar.style.width = (elapsed / INTERVAL * 100) + '%';
-        if (elapsed >= INTERVAL) {
-          elapsed = 0;
-          goTo((current + 1) % slides.length);
-        }
-      }, 100);
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
     })();
   </script>
 
