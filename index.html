@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Momo Fried Chicken</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -38,7 +39,7 @@
       line-height: 1.6;
     }
 
-    /* ─── NAV ─── */
+    /* NAV */
     nav {
       position: fixed;
       top: 0;
@@ -98,7 +99,7 @@
       background: var(--red-lt) !important;
     }
 
-    /* ─── HERO ─── */
+    /* HERO */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -173,7 +174,7 @@
       color: var(--white);
     }
 
-    /* ─── SHARED ─── */
+    /* SHARED */
     section {
       padding: 6rem 2.5rem;
     }
@@ -207,7 +208,7 @@
       font-size: 0.95rem;
     }
 
-    /* ─── FEATURED ROTATOR ─── */
+    /* FEATURED ROTATOR */
     .fr-wrap {
       position: relative;
       display: flex;
@@ -378,7 +379,7 @@
       }
     }
 
-    /* ─── ABOUT ─── */
+    /* ABOUT */
     .about-inner {
       max-width: var(--max);
       margin: 0 auto;
@@ -446,7 +447,7 @@
       line-height: 1.75;
     }
 
-    /* ─── TESTIMONIALS ─── */
+    /* TESTIMONIALS */
     .testi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -480,7 +481,7 @@
       letter-spacing: 0.05em;
     }
 
-    /* ─── CONTACT ─── */
+    /* CONTACT */
     #contact {
       background: var(--bg-off);
     }
@@ -554,7 +555,7 @@
       background: var(--red);
     }
 
-    /* ─── FOOTER ─── */
+    /* FOOTER */
     footer {
       padding: 2rem 2.5rem;
       background: var(--black);
@@ -631,19 +632,23 @@
     </a>
 
     <ul>
+      <li><a href="menu.html">Menu</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#testimonials">Reviews</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="#" class="nav-order">Order Now</a></li>
+      <li><a href="menu.html" class="nav-order">Order Now</a></li>
     </ul>
   </nav>
 
 
   <!-- HERO -->
   <section id="hero">
+
     <div class="hero-content">
 
-      <p class="hero-korean">모모 치킨 · KOREAN FRIED CHICKEN</p>
+      <p class="hero-korean">
+        모모 치킨 · KOREAN FRIED CHICKEN
+      </p>
 
       <h1 class="hero-eyebrow-title">
         Korean flavour.<br>
@@ -669,24 +674,30 @@
       <div class="fr-dots" id="fr-dots"></div>
 
       <div class="hero-actions">
-        <a href="#" class="btn-primary">
+
+        <!-- THIS NOW OPENS menu.html -->
+        <a href="menu.html" class="btn-primary">
           Order Now
         </a>
 
         <a href="#testimonials" class="btn-ghost">
           Read customer reviews
         </a>
+
       </div>
 
     </div>
+
   </section>
 
 
   <!-- ABOUT -->
   <section id="about">
+
     <div class="about-inner">
 
       <div class="about-visual">
+
         <div class="about-visual-bg"></div>
 
         <div class="about-stat-row">
@@ -707,6 +718,7 @@
           </div>
 
         </div>
+
       </div>
 
       <div class="about-text">
@@ -732,6 +744,7 @@
       </div>
 
     </div>
+
   </section>
 
 
@@ -756,66 +769,85 @@
 
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
+
           <p class="testi-text">
             “The kimchi rice is so flavorful it’s delicious! The chicken pieces is so big too!”
           </p>
+
           <div class="testi-author">
             Winnie F. · Uber Eats
           </div>
         </div>
 
+
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
+
           <p class="testi-text">
             “The chicken has so much flavour and the rice is superb.”
           </p>
+
           <div class="testi-author">
             Keisha D. · Uber Eats
           </div>
         </div>
 
+
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
+
           <p class="testi-text">
             “Such good chicken with the right level of crunch! The chips are so good too!”
           </p>
+
           <div class="testi-author">
             Rachel P. · Uber Eats
           </div>
         </div>
 
+
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
+
           <p class="testi-text">
             “Best Fried Chicken we have ever had and the flavours are amazing.”
           </p>
+
           <div class="testi-author">
             Monique V. · Uber Eats
           </div>
         </div>
 
+
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
+
           <p class="testi-text">
             “Really good flavour and portion sizes are worth the price.”
           </p>
+
           <div class="testi-author">
             Callum J. · Uber Eats
           </div>
         </div>
 
+
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
+
           <p class="testi-text">
             “10/10 arrived hot and tastes incredible.”
           </p>
+
           <div class="testi-author">
             Hannah N. · Uber Eats
           </div>
         </div>
 
       </div>
+
     </div>
+
   </section>
 
 
@@ -839,38 +871,60 @@
           <div style="margin-top: 2.5rem;">
 
             <div class="contact-block">
-              <p class="contact-label">Address</p>
+              <p class="contact-label">
+                Address
+              </p>
+
               <p class="contact-value">
                 Your Street Address<br>
                 Suburb, State, Australia
               </p>
             </div>
 
+
             <div class="contact-block">
-              <p class="contact-label">Hours</p>
+
+              <p class="contact-label">
+                Hours
+              </p>
+
               <p class="contact-value">
                 Tuesday – Sunday<br>
                 11:00am – 9:00pm
               </p>
+
             </div>
 
+
             <div class="contact-block">
-              <p class="contact-label">Phone</p>
+
+              <p class="contact-label">
+                Phone
+              </p>
+
               <p class="contact-value">
                 +61 (0) 000 000 000
               </p>
+
             </div>
 
+
             <div class="contact-block">
-              <p class="contact-label">Email</p>
+
+              <p class="contact-label">
+                Email
+              </p>
+
               <p class="contact-value">
                 hello@momofiredchicken.com.au
               </p>
+
             </div>
 
           </div>
 
         </div>
+
 
         <div>
 
@@ -884,13 +938,24 @@
 
           <div class="contact-form">
 
-            <input type="text" placeholder="Your name" />
+            <input
+              type="text"
+              placeholder="Your name"
+            />
 
-            <input type="email" placeholder="Email address" />
+            <input
+              type="email"
+              placeholder="Email address"
+            />
 
-            <input type="tel" placeholder="Phone number" />
+            <input
+              type="tel"
+              placeholder="Phone number"
+            />
 
-            <textarea placeholder="Your message"></textarea>
+            <textarea
+              placeholder="Your message"
+            ></textarea>
 
             <button class="btn-dark">
               Send Message
@@ -927,6 +992,7 @@
 
   <!-- FEATURED ROTATOR -->
   <script>
+
     (function() {
 
       const items = [
@@ -966,22 +1032,33 @@
       ];
 
 
-      const track = document.getElementById('fr-track');
-      const dotsEl = document.getElementById('fr-dots');
-      const prevBtn = document.getElementById('fr-prev');
-      const nextBtn = document.getElementById('fr-next');
+      const track =
+        document.getElementById('fr-track');
+
+      const dotsEl =
+        document.getElementById('fr-dots');
+
+      const prevBtn =
+        document.getElementById('fr-prev');
+
+      const nextBtn =
+        document.getElementById('fr-next');
 
 
       items.forEach((item, i) => {
 
-        const slideEl = document.createElement('div');
+        const slideEl =
+          document.createElement('div');
 
-        slideEl.className = 'fr-slide';
+        slideEl.className =
+          'fr-slide';
 
 
-        const card = document.createElement('div');
+        const card =
+          document.createElement('div');
 
-        card.className = 'fr-card';
+        card.className =
+          'fr-card';
 
 
         card.innerHTML = `
@@ -1018,12 +1095,17 @@
         track.appendChild(slideEl);
 
 
-        const dot = document.createElement('button');
+        const dot =
+          document.createElement('button');
 
         dot.className =
-          'fr-dot' + (i === 0 ? ' active' : '');
+          'fr-dot' +
+          (i === 0 ? ' active' : '');
 
-        dot.addEventListener('click', () => goTo(i));
+        dot.addEventListener(
+          'click',
+          () => goTo(i)
+        );
 
         dotsEl.appendChild(dot);
 
@@ -1039,7 +1121,8 @@
       function goTo(i) {
 
         current =
-          (i + items.length) % items.length;
+          (i + items.length) %
+          items.length;
 
         track.style.transform =
           `translateX(-${current * 100}%)`;
@@ -1068,6 +1151,7 @@
       );
 
     })();
+
   </script>
 
 </body>
