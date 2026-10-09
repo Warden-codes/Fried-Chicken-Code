@@ -312,69 +312,6 @@
       .fr-body { padding: 1.8rem 1.6rem 2rem; }
     }
 
-    /* ─── MENU ─── */
-    #menu { background: var(--bg-off); }
-
-    .menu-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
-
-    .menu-tab {
-      padding: 0.65rem 1.4rem;
-      font-size: 0.82rem;
-      font-weight: 400;
-      color: var(--grey);
-      cursor: pointer;
-      border: none;
-      background: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: color 0.15s, border-color 0.15s;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .menu-tab:hover { color: var(--black); }
-    .menu-tab.active { color: var(--black); border-bottom-color: var(--red); font-weight: 500; }
-
-    .menu-panel { display: none; }
-    .menu-panel.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5px; background: rgba(0,0,0,0.07); border: 1.5px solid rgba(0,0,0,0.07); }
-
-    .menu-card {
-      background: var(--bg-off);
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      transition: background 0.18s;
-    }
-
-    .menu-card:hover { background: var(--white); }
-
-    .menu-emoji { font-size: 1.8rem; margin-bottom: 0.3rem; }
-
-    .menu-name {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-
-    .menu-desc {
-      font-size: 0.85rem;
-      color: var(--grey);
-      line-height: 1.65;
-      flex: 1;
-    }
-
-    .menu-price {
-      font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--red);
-      margin-top: 0.5rem;
-    }
 
     /* ─── ABOUT ─── */
     .about-inner {
@@ -705,24 +642,7 @@ section { padding: 5rem 2.5rem; }
   .menu-card { min-height: auto; }
   .menu-desc { min-height: 0; padding-bottom: .7rem; }
 }
-
-.menu-card .menu-photo {
-  width: 100%;
-  height: 190px;
-  object-fit: cover;
-  display: block;
-  border-bottom: 1px solid #ddd;
-}
-
-  
-.tab-ko {
-  opacity: .7;
-  font-family: 'Noto Serif KR', serif;
-  font-weight: 400;
-  margin-left: .25rem;
-}
-
-  </style>
+</style>
 </head>
 <body>
 
@@ -730,7 +650,6 @@ section { padding: 5rem 2.5rem; }
   <nav>
     <a href="#hero" class="nav-logo"><img src="https://i0.wp.com/momochicken.com.au/wp-content/uploads/2022/07/logo.png?fit=265%2C143&ssl=1" alt="Momo Chicken" style="height: 32px; width: auto; vertical-align: middle;" /></a>
     <ul>
-      <li><a href="#menu">Menu</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#testimonials">Reviews</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -756,7 +675,7 @@ section { padding: 5rem 2.5rem; }
 
       <div class="hero-actions">
         <a href="#order" class="btn-primary">Order Now</a>
-        <a href="#menu" class="btn-ghost">See the full menu</a>
+        <a href="#testimonials" class="btn-ghost">Read customer reviews</a>
       </div>
     </div>
   </section>
@@ -775,303 +694,6 @@ section { padding: 5rem 2.5rem; }
     </div>
   </section>
 
-  <!-- MENU -->
-  <section id="menu">
-    <div class="section-inner">
-      <p class="section-label">What we serve</p>
-      <h2 class="section-title">The Menu</h2>
-      <p class="section-desc">Korean flavours, proper technique. Every item made from scratch — nothing sitting in a warmer.</p>
-
-      <!-- CATEGORY PHOTOS -->
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem;">
-        <div style="text-align:center;">
-          <img src="https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-14%404x.png?fit=900%2C867&ssl=1" alt="Chicken menu" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:2px; margin-bottom:0.6rem;" />
-          <span style="font-size:0.8rem; color: var(--grey);">Chicken</span>
-        </div>
-        <div style="text-align:center;">
-          <img src="https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-13%404x.png?fit=900%2C869&ssl=1" alt="Burgers menu" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:2px; margin-bottom:0.6rem;" />
-          <span style="font-size:0.8rem; color: var(--grey);">Burgers</span>
-        </div>
-        <div style="text-align:center;">
-          <img src="https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-12%404x.png?fit=900%2C867&ssl=1" alt="Meals menu" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:2px; margin-bottom:0.6rem;" />
-          <span style="font-size:0.8rem; color: var(--grey);">Meals</span>
-        </div>
-        <div style="text-align:center;">
-          <img src="https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-11%404x.png?fit=900%2C867&ssl=1" alt="Sides menu" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:2px; margin-bottom:0.6rem;" />
-          <span style="font-size:0.8rem; color: var(--grey);">Sides</span>
-        </div>
-      </div>
-
-      <!-- TABS -->
-      <div class="menu-tabs">
-        <button class="menu-tab active" onclick="showTab('chicken')">Chicken <span class="tab-ko">치킨</span></button>
-        <button class="menu-tab" onclick="showTab('burgers')">Burgers <span class="tab-ko">버거</span></button>
-        <button class="menu-tab" onclick="showTab('bowls')">Rice Bowls <span class="tab-ko">라이스</span></button>
-        <button class="menu-tab" onclick="showTab('soups')">Soups <span class="tab-ko">국물</span></button>
-        <button class="menu-tab" onclick="showTab('sides')">Sides <span class="tab-ko">사이드</span></button>
-        <button class="menu-tab" onclick="showTab('drinks')">Drinks <span class="tab-ko">음료</span></button>
-      </div>
-
-      <!-- CHICKEN -->
-      <div class="menu-panel active" id="tab-chicken">
-        <div class="menu-card">
-          <div class="menu-emoji">🍗</div>
-          <div class="menu-name">Garlic Soy Grilled Chicken</div>
-          <div class="menu-desc">Grilled chicken glazed in a rich garlic soy marinade. Smoky, savoury, and worth every bite.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🔥</div>
-          <div class="menu-name">Boneless Chicken</div>
-          <div class="menu-desc">Crispy boneless pieces — great on their own or tossed in your sauce of choice.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">📦</div>
-          <div class="menu-name">Korean Snack Pack (Chicken)</div>
-          <div class="menu-desc">Chicken pieces, fries, and a drink. The go-to combo when you want the full spread.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥡</div>
-          <div class="menu-name">Momo Lunch Box <span class="menu-korean">모모 런치박스</span></div>
-          <div class="menu-desc">A full meal deal — chicken, rice, sides. Everything you need, nothing you don't.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-      </div>
-
-      <!-- BURGERS -->
-      <div class="menu-panel" id="tab-burgers">
-        <div class="menu-card">
-          <div class="menu-emoji">🍔</div>
-          <div class="menu-name">Nashville Burger <span class="menu-korean">내슈빌 버거</span></div>
-          <div class="menu-desc">Hot-glazed crispy chicken fillet, pickles, and slaw. Brings the heat, stays in balance.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🧀</div>
-          <div class="menu-name">Momo Chicken Cheese Burger <span class="menu-korean">모모 치킨 치즈 버거</span></div>
-          <div class="menu-desc">Crispy chicken, melted cheese, house sauce. A proper cheeseburger done the Momo way.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥩</div>
-          <div class="menu-name">Momo Beef Bulgogi Burger <span class="menu-korean">모모 불고기 버거</span></div>
-          <div class="menu-desc">Marinated bulgogi beef patty with our signature Korean-inspired toppings.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥗</div>
-          <div class="menu-name">Momo Chicken Slaw Burger <span class="menu-korean">모모 치킨 슬로 버거</span></div>
-          <div class="menu-desc">Crispy chicken topped with fresh slaw and house sauce — light but satisfying.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍖</div>
-          <div class="menu-name">Momo Stack Burger</div>
-          <div class="menu-desc">The full build — double the layers, double the satisfaction.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍗</div>
-          <div class="menu-name">Momo Chicken Mayo Burger</div>
-          <div class="menu-desc">Crispy chicken with a generous hit of house-made chicken mayo. Clean and classic.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥬</div>
-          <div class="menu-name">Momo Classic Burger <span class="menu-korean">모모 클래식 버거</span></div>
-          <div class="menu-desc">No fuss. Crispy chicken, lettuce, pickles, and our Momo sauce on a soft bun.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-      </div>
-
-      <!-- BOWLS -->
-      <div class="menu-panel" id="tab-bowls">
-        <div class="menu-card">
-          <div class="menu-emoji">🍚</div>
-          <div class="menu-name">Bibimbap <span class="menu-korean">비빔밥</span></div>
-          <div class="menu-desc">Rice topped with seasoned vegetables, egg, and gochujang sauce. A Korean staple, done properly.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥩</div>
-          <div class="menu-name">Beef Bulgogi Rice <span class="menu-korean">불고기 덮밥</span></div>
-          <div class="menu-desc">Tender marinated bulgogi beef over steamed rice with pickled radish on the side.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍗</div>
-          <div class="menu-name">Chicken Mayo Rice <span class="menu-korean">치킨 마요 덮밥</span></div>
-          <div class="menu-desc">Crispy chicken over rice, finished with house chicken mayo and spring onion.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🔥</div>
-          <div class="menu-name">Kimchi Chicken Fried Rice <span class="menu-korean">김치 치킨 볶음밥</span></div>
-          <div class="menu-desc">Wok-fried rice with kimchi, chicken, and sesame oil. Punchy and deeply satisfying.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥡</div>
-          <div class="menu-name">Bulgogi Beef Cupbap</div>
-          <div class="menu-desc">Bulgogi beef over rice in a cup — perfect for eating on the go without compromise.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥢</div>
-          <div class="menu-name">Signature Cupbap</div>
-          <div class="menu-desc">Our house cupbap — ask the team what's in rotation this week.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-      </div>
-
-      <!-- SOUPS -->
-      <div class="menu-panel" id="tab-soups">
-        <div class="menu-card">
-          <div class="menu-emoji">🍲</div>
-          <div class="menu-name">Hot Stone Bulgogi Beef Soup <span class="menu-korean">돌솥 불고기 국</span></div>
-          <div class="menu-desc">Rich, slow-cooked bulgogi broth served bubbling in a stone pot. Warming and full of depth.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍜</div>
-          <div class="menu-name">Chicken Noodle Soup <span class="menu-korean">닭칼국수</span></div>
-          <div class="menu-desc">Light chicken broth with hand-pulled noodles and fresh vegetables. Simple and restorative.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🦪</div>
-          <div class="menu-name">Clam Noodle Soup <span class="menu-korean">조개 칼국수</span></div>
-          <div class="menu-desc">Delicate clam broth with thin noodles. Clean, oceanic flavour — a quiet standout.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍗</div>
-          <div class="menu-name">Chicken Soup <span class="menu-korean">닭곰탕</span></div>
-          <div class="menu-desc">Classic Korean chicken soup — clear broth, tender chicken, and rice. Comfort in a bowl.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🌶️</div>
-          <div class="menu-name">Hot Chicken Feet <span class="menu-korean">매운 닭발</span></div>
-          <div class="menu-desc">Braised chicken feet in a bold spicy sauce. A Korean classic for those who know.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍜</div>
-          <div class="menu-name">Stir Fry Noodles <span class="menu-korean">볶음 우동</span></div>
-          <div class="menu-desc">Wok-tossed noodles with vegetables and savoury Korean seasoning. Quick, filling, good.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-      </div>
-
-      <!-- SIDES -->
-      <div class="menu-panel" id="tab-sides">
-        <div class="menu-card">
-          <div class="menu-emoji">🍟</div>
-          <div class="menu-name">Loaded Fries <span class="menu-korean">치즈 치킨 로드 프라이</span></div>
-          <div class="menu-desc">Hand-cut fries loaded with your choice of toppings and house sauces.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🧀</div>
-          <div class="menu-name">Truffle Mayo Fries <span class="menu-korean">트러플 마요 프라이</span></div>
-          <div class="menu-desc">Crispy fries tossed in truffle mayo. Rich, fragrant, and hard to share.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍠</div>
-          <div class="menu-name">Sweet Potato <span class="menu-korean">고구마 튀김</span></div>
-          <div class="menu-desc">Roasted sweet potato — naturally sweet with a soft centre. A lighter side option.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥗</div>
-          <div class="menu-name">Coleslaw <span class="menu-korean">코울슬로</span></div>
-          <div class="menu-desc">House coleslaw — fresh, crisp, and made to cut through the richer dishes.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥬</div>
-          <div class="menu-name">Kimchi <span class="menu-korean">김치</span></div>
-          <div class="menu-desc">Fermented kimchi — sour, spicy, and made to complement everything on the menu.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🌿</div>
-          <div class="menu-name">Radish <span class="menu-korean">치킨무</span></div>
-          <div class="menu-desc">Pickled radish cubes — the classic Korean fried chicken side. Cooling and crisp.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🧆</div>
-          <div class="menu-name">Mozzarella Sticks <span class="menu-korean">모짜렐라 스틱</span></div>
-          <div class="menu-desc">Crispy outside, molten mozzarella inside. Served with dipping sauce.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🌶️</div>
-          <div class="menu-name">Toppoki / Rose Toppoki <span class="menu-korean">떡볶이 / 로제 떡볶이</span></div>
-          <div class="menu-desc">Korean rice cakes in spicy sauce — or the rose version for a creamier, milder take.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">❄️</div>
-          <div class="menu-name">Snowing Three Set <span class="menu-korean">스노잉 3종 세트</span></div>
-          <div class="menu-desc">Three sides served together — ask the team for today's selection.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🧄</div>
-          <div class="menu-name">Sauces <span class="menu-korean">소스</span></div>
-          <div class="menu-desc">Burger Sauce, Honey Mustard, Yogurt Sauce, Cheese Fondue — available on the side.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-      </div>
-
-      <!-- DRINKS -->
-      <div class="menu-panel" id="tab-drinks">
-        <div class="menu-card">
-          <div class="menu-emoji">🥛</div>
-          <div class="menu-name">Milkshake (Classics) <span class="menu-korean">밀크셰이크</span></div>
-          <div class="menu-desc">Thick classic milkshakes. Ask for today's flavours at the counter.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍪</div>
-          <div class="menu-name">Oreo Milkshake <span class="menu-korean">오레오 밀크셰이크</span></div>
-          <div class="menu-desc">Blended Oreo milkshake — rich, creamy, and generous with the cookies.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍑</div>
-          <div class="menu-name">Peach Ice Tea <span class="menu-korean">복숭아 아이스티</span></div>
-          <div class="menu-desc">Lightly sweetened peach iced tea — refreshing and not too heavy.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍋</div>
-          <div class="menu-name">Lemon Ice Tea <span class="menu-korean">레몬 아이스티</span></div>
-          <div class="menu-desc">Classic lemon iced tea — sharp, clean, and a solid pairing with anything spicy.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🍊</div>
-          <div class="menu-name">Juices <span class="menu-korean">주스</span></div>
-          <div class="menu-desc">Apple Juice, Orange Juice, Pineapple Juice — available as regular or box sizes.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-        <div class="menu-card">
-          <div class="menu-emoji">🥤</div>
-          <div class="menu-name">Soft Drinks <span class="menu-korean">탄산음료</span></div>
-          <div class="menu-desc">Coke, Sprite, and Fanta available in 375ML and 600ML sizes.</div>
-          <div class="menu-price">See menu for pricing</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
 
   <!-- ABOUT -->
   <section id="about">
@@ -1117,26 +739,49 @@ section { padding: 5rem 2.5rem; }
   <section id="testimonials">
     <div class="section-inner">
       <p class="section-label">What people say</p>
-      <h2 class="section-title">Reviews</h2>
+      <h2 class="section-title">Customer Reviews</h2>
+      <p class="section-desc">Real customer feedback from Momo Chicken's Uber Eats listing.</p>
+
       <div class="testi-grid">
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">The Garlic Soy Chicken is something else entirely. The glaze is deep and savoury without being heavy. One of the best things I've eaten this year.</p>
-          <div class="testi-author">Google Review</div>
+          <p class="testi-text">“The kimchi rice is so flavorful it’s delicious! The chicken pieces is so big too!”</p>
+          <div class="testi-author">Winnie F. · Uber Eats</div>
         </div>
+
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">Ordered the Kimchi Fried Rice and the Nashville Burger — both were outstanding. The kimchi in the rice is actually fermented, not some sad imitation. Will be back constantly.</p>
-          <div class="testi-author">Google Review</div>
+          <p class="testi-text">“The chicken has so much flavour and the rice is superb.”</p>
+          <div class="testi-author">Keisha D. · Uber Eats</div>
         </div>
+
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">The Rose Toppoki converted me. I'd never tried it before and now I order it every single visit. The Hot Stone Bulgogi Soup on a cold night is also unreal.</p>
-          <div class="testi-author">Google Review</div>
+          <p class="testi-text">“Such good chicken with the right level of crunch! The chips are so good too!”</p>
+          <div class="testi-author">Rachel P. · Uber Eats</div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">“Best Fried Chicken we have ever had and the flavours are amazing.”</p>
+          <div class="testi-author">Monique V. · Uber Eats</div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">“Really good flavour and portion sizes are worth the price.”</p>
+          <div class="testi-author">Callum J. · Uber Eats</div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">“10/10 arrived hot and tastes incredible.”</p>
+          <div class="testi-author">Hannah N. · Uber Eats</div>
         </div>
       </div>
     </div>
   </section>
+
 
   <!-- CONTACT -->
   <section id="contact">
@@ -1190,13 +835,6 @@ section { padding: 5rem 2.5rem; }
   </footer>
 
   <script>
-    function showTab(name) {
-      document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
-      document.getElementById('tab-' + name).classList.add('active');
-      event.target.classList.add('active');
-    }
-
     /* ─── FEATURED ROTATOR (manual, no auto-timer) ─── */
     (function() {
       const items = [
@@ -1245,7 +883,6 @@ section { padding: 5rem 2.5rem; }
       prevBtn.addEventListener('click', () => goTo(current - 1));
       nextBtn.addEventListener('click', () => goTo(current + 1));
     })();
-  </script>
-
+</script>
 </body>
 </html>
