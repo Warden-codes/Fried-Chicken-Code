@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Momo Fried Chicken — Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0f0f0f;
+      --white: #fafafa;
+      --red: #c0392b;
+      --red-lt: #e74c3c;
+      --grey: #5c5c5c;
+      --bg-off: #f4f2f0;
+      --max: 1100px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      background: var(--bg-off);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2.5rem;
+      background: rgba(250,250,250,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+
+    .nav-logo img { height: 42px; width: auto; display: block; }
+    .back-link {
+      color: var(--black);
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      border: 1px solid rgba(0,0,0,.15);
+      padding: .55rem 1rem;
+      transition: .2s;
+    }
+    .back-link:hover { background: var(--black); color: var(--white); }
+
+    .menu-hero {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 7rem 1.5rem 5rem;
+      border-bottom: 7px solid var(--red);
+    }
+    .menu-hero-korean {
+      font-family: 'Noto Serif KR', serif;
+      color: var(--red);
+      letter-spacing: .15em;
+      font-size: .85rem;
+      margin-bottom: .8rem;
+    }
+    .menu-hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      line-height: 1;
+      margin-bottom: 1.2rem;
+    }
+    .menu-hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #d5d5d5;
+      font-size: .98rem;
+    }
+
+    #menu {
+      background: var(--bg-off);
+      padding: 6rem 2.5rem;
+    }
+
+    .menu-intro {
+      max-width: 680px;
+      margin: 0 auto 3.5rem;
+      text-align: center;
+    }
+
+    .menu-intro .section-label {
+      color: var(--red);
+    }
+
+    .menu-intro .section-title {
+      margin-bottom: 1rem;
+    }
+
+    .menu-intro p {
+      color: var(--grey);
+      font-size: 0.95rem;
+    }
+
+    .menu-category {
+      max-width: var(--max);
+      margin: 0 auto 4rem;
+    }
+
+    .menu-category:last-child {
+      margin-bottom: 0;
+    }
+
+    .menu-category-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+      padding-bottom: .8rem;
+      border-bottom: 1px solid rgba(0,0,0,.12);
+    }
+
+    .menu-category-heading h3 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+    }
+
+    .menu-category-heading span {
+      color: var(--red);
+      font-family: 'Noto Serif KR', serif;
+      font-size: .82rem;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(0,0,0,.12);
+      border: 1px solid rgba(0,0,0,.12);
+    }
+
+    .menu-item {
+      background: var(--white);
+      padding: 1.35rem 1.5rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.07);
+      position: relative;
+      z-index: 1;
+    }
+
+    .menu-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+    }
+
+    .menu-item-name {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .menu-item-korean {
+      color: var(--red);
+      font-family: 'Noto Serif KR', serif;
+      font-size: .72rem;
+      margin-left: .45rem;
+      white-space: nowrap;
+    }
+
+    .menu-price {
+      font-size: .95rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .menu-desc {
+      margin-top: .45rem;
+      color: var(--grey);
+      font-size: .82rem;
+      line-height: 1.55;
+      max-width: 620px;
+    }
+
+    .menu-note {
+      display: inline-block;
+      margin-top: .65rem;
+      color: var(--red);
+      font-size: .7rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      #menu { padding: 4.5rem 1.2rem; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-category-heading { gap: .6rem; }
+      .menu-item { padding: 1.15rem; }
+      .menu-item-korean { display: block; margin: .2rem 0 0; }
+    }
+
+
+    .menu-content { padding-top: 4rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="https://i0.wp.com/momochicken.com.au/wp-content/uploads/2022/07/logo.png?fit=265%2C143&ssl=1" alt="Momo Fried Chicken">
+    </a>
+    <a href="index.html" class="back-link">Back to Home</a>
+  </nav>
+
+  <header class="menu-hero">
+    <p class="menu-hero-korean">모모 치킨 · KOREAN FRIED CHICKEN</p>
+    <h1>The Momo Menu</h1>
+    <p>A Korean flavour experience built around crunch, comfort, heat and the dishes made for sharing.</p>
+  </header>
+
+  <main class="menu-content">
+  <!-- MENU -->
+  <section id="menu">
+    <div class="menu-intro">
+      <p class="section-label">The Momo experience · 모모의 맛</p>
+      <h2 class="section-title">A taste of Korea, made to share.</h2>
+      <p>From golden Korean fried chicken to bubbling soups, rice dishes and classic sides, every plate brings together the crunch, heat, sweetness and comfort of Korean flavour.</p>
+    </div>
+
+    <div class="menu-category">
+      <div class="menu-category-heading">
+        <h3>Chicken</h3>
+        <span>치킨</span>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Boneless Three Set</span><span class="menu-item-korean">순살 3종 세트</span></div><span class="menu-price">$44.90</span></div>
+          <p class="menu-desc">Boneless chicken with three flavours: Fried, Soy Garlic and Marinade (mild Korean sweet chilli).</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Snowing Three Set</span><span class="menu-item-korean">스노잉 3종 세트</span></div><span class="menu-price">$44.90</span></div>
+          <p class="menu-desc">Boneless chicken with three snowing seasonings: cheese, onion, chilli or corn powder.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Whole Boneless Candy Chicken</span><span class="menu-item-korean">순살 캔디 치킨</span></div><span class="menu-price">$40.90</span></div>
+          <p class="menu-desc">Boneless chicken with rice cakes, coated in Momo's sweet candy sauce.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Whole Boneless Honey Chicken</span><span class="menu-item-korean">순살 허니 치킨</span></div><span class="menu-price">$40.90</span></div>
+          <p class="menu-desc">Boneless chicken with rice cakes coated in honey sauce.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Whole Fried Bone Chicken</span><span class="menu-item-korean">후라이드 치킨</span></div><span class="menu-price">$38.90</span></div>
+          <p class="menu-desc">18 pieces of whole fried chicken with your choice of up to two coated flavours.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Whole Fried Boneless Chicken</span><span class="menu-item-korean">순살 후라이드</span></div><span class="menu-price">$38.90</span></div>
+          <p class="menu-desc">Whole boneless chicken with your choice of up to two coated flavours.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Half Boneless Candy Chicken</span><span class="menu-item-korean">반마리 캔디 치킨</span></div><span class="menu-price">$24.90</span></div>
+          <p class="menu-desc">Boneless chicken with rice cakes coated in candy sauce.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Half Boneless Honey Chicken</span><span class="menu-item-korean">반마리 허니 치킨</span></div><span class="menu-price">$24.90</span></div>
+          <p class="menu-desc">Boneless chicken with rice cakes coated in honey sauce.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Half Fried Chicken</span><span class="menu-item-korean">반마리 후라이드</span></div><span class="menu-price">$22.90</span></div>
+          <p class="menu-desc">9 pieces of fried chicken with your choice of one coated flavour.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Korean Snack Pack — Small</span><span class="menu-item-korean">한국식 스낵팩</span></div><span class="menu-price">$19.90</span></div>
+          <p class="menu-desc">Crunchy chips topped with boneless chicken and your choice of sauce. Recommended with cheese.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Korean Snack Pack — Large</span><span class="menu-item-korean">한국식 스낵팩</span></div><span class="menu-price">$24.90</span></div>
+          <p class="menu-desc">A larger serving of crunchy chips topped with boneless chicken and your choice of sauce.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Tenders</span><span class="menu-item-korean">치킨 텐더</span></div><span class="menu-price">$18.90</span></div>
+          <p class="menu-desc">Five pieces of chicken tenderloin served with special sauce.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Bites</span><span class="menu-item-korean">치킨 바이트</span></div><span class="menu-price">$17.90</span></div>
+          <p class="menu-desc">Chicken breast bites with cheese and special sauce.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Wings</span><span class="menu-item-korean">치킨 윙</span></div><span class="menu-price">$18.90</span></div>
+          <p class="menu-desc">Seven pieces of chicken wings coated in your chosen sauce.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <div class="menu-category-heading">
+        <h3>Meals</h3>
+        <span>식사</span>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Noodle Soup</span><span class="menu-item-korean">닭칼국수</span></div><span class="menu-price">$22.90</span></div>
+          <p class="menu-desc">Noodles, chicken broth, vegetables and chicken.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Volcano Chicken</span><span class="menu-item-korean">화산 치킨</span></div><span class="menu-price">$34.90</span></div>
+          <p class="menu-desc">Chicken thigh, onion, rice cakes, shallot and zucchini in Momo Volcano Sauce.</p>
+          <span class="menu-note">Hot</span>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Soup</span><span class="menu-item-korean">닭곰탕</span></div><span class="menu-price">$20.90</span></div>
+          <p class="menu-desc">Chicken broth, vegetables and chicken breast, served with steamed rice.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Hot Stone Bulgogi Beef Soup</span><span class="menu-item-korean">불고기 전골</span></div><span class="menu-price">$23.90</span></div>
+          <p class="menu-desc">Glass noodles, vegetables and bulgogi beef. Includes rice.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Kimchi Soup</span><span class="menu-item-korean">김치찌개</span></div><span class="menu-price">$22.90</span></div>
+          <p class="menu-desc">Warm kimchi soup served with rice.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Stir-Fry Noodles</span><span class="menu-item-korean">볶음 우동</span></div><span class="menu-price">$21.90</span></div>
+          <p class="menu-desc">Udon noodles, chicken and vegetables tossed in Momo special sauce.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Bibimbap</span><span class="menu-item-korean">비빔밥</span></div><span class="menu-price">$21.90</span></div>
+          <p class="menu-desc">Rice, sesame oil, vegetables, mushroom, cabbage, fried egg and your selected protein.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Beef Bulgogi Rice</span><span class="menu-item-korean">소불고기 덮밥</span></div><span class="menu-price">$22.90</span></div>
+          <p class="menu-desc">Bulgogi beef with rice, egg and fresh vegetables.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Kimchi Chicken Fried Rice</span><span class="menu-item-korean">김치 치킨 볶음밥</span></div><span class="menu-price">$22.90</span></div>
+          <p class="menu-desc">Chicken thigh, kimchi, rice and spring onion.</p>
+        </article>
+        <article class="menu-item">
+          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Mayo Rice</span><span class="menu-item-korean">치킨 마요 덮밥</span></div><span class="menu-price">$22.90</span></div>
+          <p class="menu-desc">Boneless chicken, egg, cabbage, spring onion, mayo and Momo special teriyaki sauce.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <div class="menu-category-heading">
+        <h3>Sides</h3>
+        <span>사이드</span>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Toppoki</span><span class="menu-item-korean">떡볶이</span></div><span class="menu-price">$20.90</span></div><p class="menu-desc">Rice cakes, fish cake and spring onion in toppoki sauce.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Rose Toppoki</span><span class="menu-item-korean">로제 떡볶이</span></div><span class="menu-price">$22.90</span></div><p class="menu-desc">Rice cakes, fish cake and spring onion in creamy rose toppoki sauce.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Kimchi Pancake</span><span class="menu-item-korean">김치전</span></div><span class="menu-price">$22.90</span></div><p class="menu-desc">Crispy Korean-style pancake with onion, kimchi, carrot and spring onion.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Korean Pancake</span><span class="menu-item-korean">야채전</span></div><span class="menu-price">$20.90</span></div><p class="menu-desc">Korean-style vegetable pancake with onion, carrot and spring onion.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Corn Cheese</span><span class="menu-item-korean">콘치즈</span></div><span class="menu-price">$17.90</span></div><p class="menu-desc">Sweet corn with cheese, butter and mayo.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Loaded Fries</span><span class="menu-item-korean">치킨 로디드 프라이</span></div><span class="menu-price">$16.90</span></div><p class="menu-desc">Crispy fries loaded with diced chicken thigh and cheese.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Stick Chips</span><span class="menu-item-korean">스틱 칩스</span></div><span class="menu-price">$12.90</span></div><p class="menu-desc">Crispy chips seasoned with Momo seasoning.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Sweet Potato</span><span class="menu-item-korean">고구마 튀김</span></div><span class="menu-price">$14.90</span></div><p class="menu-desc">Crispy sweet potato chips.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Rice Ball</span><span class="menu-item-korean">주먹밥</span></div><span class="menu-price">$11.90</span></div><p class="menu-desc">Rice with sesame oil, seaweed flakes, radish and mayo.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Steamed Egg</span><span class="menu-item-korean">계란찜</span></div><span class="menu-price">$17.90</span></div><p class="menu-desc">Steamed egg with sesame oil, sesame seed, shallot, onion, carrot and zucchini.</p></article>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <div class="menu-category-heading">
+        <h3>Burgers &amp; Bao</h3>
+        <span>버거 &amp; 바오</span>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Momo Chicken Slaw Burger</span><span class="menu-item-korean">모모 치킨 슬로 버거</span></div><span class="menu-price">$22.90</span></div><p class="menu-desc">Milk bun, lettuce, tomato, fried chicken thigh, marinade sauce and coleslaw.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Momo Beef Bulgogi Burger</span><span class="menu-item-korean">불고기 버거</span></div><span class="menu-price">$20.90</span></div><p class="menu-desc">Milk bun, lettuce, tomato and bulgogi patty.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Momo Bao Buns</span><span class="menu-item-korean">치킨 바오</span></div><span class="menu-price">$19.90</span></div><p class="menu-desc">Three bao buns with boneless chicken, lettuce and aioli. Choose three sauces.</p></article>
+        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Momo Chicken Cheese Burger</span><span class="menu-item-korean">치킨 치즈 버거</span></div><span class="menu-price">$20.90</span></div><p class="menu-desc">Milk bun, lettuce, tomato, fried chicken thigh and cheese.</p></article>
+      </div>
+    </div>
+  </section>
+  </main>
+</body>
+</html>
