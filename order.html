@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Momo Fried Chicken — Checkout (Demo)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       CONTENTS
+       1. Tokens
+       2. Base
+       3. Header + demo banner
+       4. Checkout layout (form, fields, card inputs)
+       5. Order summary
+       6. Empty + confirmation views
+       ========================================================================== */
+
+
+    /* ==========================================================================
+       1. TOKENS
+       ========================================================================== */
+    :root {
+      --black:  #0f0f0f;
+      --white:  #fafafa;
+      --red:    #c0392b;
+      --red-lt: #e74c3c;
+      --grey:   #5c5c5c;
+      --bg-off: #f4f2f0;
+      --line:   rgba(0, 0, 0, 0.12);
+
+      --font-serif: 'Noto Serif KR', serif;
+      --font-sans:  'Inter', sans-serif;
+
+      --max:    1000px;
+      --gutter: 2.5rem;
+    }
+
+
+    /* ==========================================================================
+       2. BASE
+       ========================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [hidden] { display: none !important; }
+
+    body {
+      font-family: var(--font-sans);
+      font-weight: 300;
+      background: var(--bg-off);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    button { font-family: inherit; cursor: pointer; }
+
+    .page-title {
+      margin-bottom: 1.5rem;
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 0.95rem 1rem;
+      border: 1px solid var(--red);
+      background: var(--red);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn:hover:not(:disabled) { background: var(--red-lt); border-color: var(--red-lt); }
+    .btn:disabled { opacity: 0.6; cursor: wait; }
+
+    .btn-outline { background: transparent; color: var(--red); }
+    .btn-outline:hover { background: var(--red); color: var(--white); }
+
+
+    /* ==========================================================================
+       3. HEADER + DEMO BANNER
+       ========================================================================== */
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem var(--gutter);
+      background: rgba(250, 250, 250, 0.96);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .top-logo img { display: block; height: 42px; width: auto; }
+
+    .top-link {
+      padding: 0.55rem 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      color: var(--black);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .top-link:hover { background: var(--black); color: var(--white); }
+
+    .demo-banner {
+      padding: 0.8rem var(--gutter);
+      background: #fff4cc;
+      border-bottom: 1px solid #e8d48a;
+      color: #5b4a00;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .demo-banner strong { font-weight: 700; }
+
+
+    /* ==========================================================================
+       4. CHECKOUT LAYOUT
+       ========================================================================== */
+    .checkout {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 3rem var(--gutter) 5rem;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* Form blocks */
+    .form-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1.6rem;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .form-block legend {
+      padding: 0 0.4rem;
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .field label,
+    .field .label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.68rem;
+      color: var(--red);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .field input[type="text"],
+    .field input[type="tel"],
+    .field input[type="email"],
+    .field textarea {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border: 1px solid var(--line);
+      background: var(--white);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field textarea:focus { border-color: var(--red); }
+
+    .field textarea { min-height: 80px; resize: vertical; }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* Pickup / delivery choice */
+    .choice-row { display: flex; gap: 0.6rem; }
+
+    .choice {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--line);
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .choice:has(input:checked) { border-color: var(--red); background: rgba(192, 57, 43, 0.06); }
+    .choice input { accent-color: var(--red); }
+
+    /* Card inputs */
+    .card-hint { font-size: 0.78rem; color: var(--grey); }
+
+    .card-number { letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+
+    .pay-error {
+      padding: 0.75rem 0.9rem;
+      border: 1px solid rgba(192, 57, 43, 0.35);
+      background: rgba(192, 57, 43, 0.08);
+      color: var(--red);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 800px) {
+      :root { --gutter: 1.2rem; }
+      .checkout-grid { grid-template-columns: 1fr; }
+      .summary { order: -1; position: static; }
+    }
+
+    @media (max-width: 500px) {
+      .top-logo img { height: 34px; }
+      .field-row { grid-template-columns: 1fr; }
+    }
+
+
+    /* ==========================================================================
+       5. ORDER SUMMARY
+       ========================================================================== */
+    .summary {
+      position: sticky;
+      top: 1.5rem;
+      padding: 1.6rem;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--red);
+      background: var(--white);
+    }
+
+    .summary h2 {
+      margin-bottom: 1rem;
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .summary-lines { list-style: none; }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.88rem;
+    }
+
+    .summary-line small { display: block; font-size: 0.74rem; color: var(--grey); }
+
+    .summary-price { white-space: nowrap; }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      margin: 1rem 0 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .summary-edit {
+      display: block;
+      margin-top: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--grey);
+      text-align: center;
+    }
+
+    .summary-edit:hover { color: var(--black); }
+
+
+    /* ==========================================================================
+       6. EMPTY + CONFIRMATION VIEWS
+       ========================================================================== */
+    .message {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 5rem var(--gutter);
+      text-align: center;
+    }
+
+    .message h1 {
+      margin-bottom: 0.6rem;
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+    }
+
+    .message p { margin-bottom: 0.5rem; font-size: 0.92rem; color: var(--grey); }
+    .message strong { color: var(--black); }
+
+    .message .btn { margin-top: 0.8rem; }
+
+    .message-tick {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.6rem;
+      height: 3.6rem;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-size: 1.7rem;
+    }
+
+    .message-demo {
+      margin: 1.2rem 0;
+      padding: 0.8rem 1rem;
+      background: #fff4cc;
+      border: 1px solid #e8d48a;
+      color: #5b4a00;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======================================================================
+       HEADER + DEMO BANNER
+       ====================================================================== -->
+  <header class="top">
+    <a href="index.html" class="top-logo">
+      <img src="https://i0.wp.com/momochicken.com.au/wp-content/uploads/2022/07/logo.png?fit=265%2C143&ssl=1" alt="Momo Fried Chicken">
+    </a>
+    <a href="menu.html" class="top-link">&larr; Back to menu</a>
+  </header>
+
+  <div class="demo-banner">
+    <strong>Demo checkout.</strong> No real payment is taken, and card details are never stored or sent anywhere.
+    Use card <strong>4242 4242 4242 4242</strong> with any future expiry and any CVC.
+    <strong>4000 0000 0000 0002</strong> simulates a declined card.
+  </div>
+
+
+  <!-- ======================================================================
+       VIEW: CHECKOUT
+       ====================================================================== -->
+  <main class="checkout" id="view-checkout" hidden>
+    <h1 class="page-title">Checkout</h1>
+
+    <div class="checkout-grid">
+
+      <form id="pay-form" novalidate>
+
+        <!-- Your details -->
+        <fieldset class="form-block">
+          <legend>Your details</legend>
+
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required minlength="8">
+            </div>
+            <div class="field">
+              <label for="f-email">Email (optional)</label>
+              <input id="f-email" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="label">Order type</span>
+            <div class="choice-row">
+              <label class="choice"><input type="radio" name="type" value="pickup" checked> Pickup</label>
+              <label class="choice"><input type="radio" name="type" value="delivery"> Delivery</label>
+            </div>
+          </div>
+
+          <div class="field" id="address-field" hidden>
+            <label for="f-address">Delivery address</label>
+            <input id="f-address" name="address" type="text" autocomplete="street-address">
+          </div>
+
+          <div class="field">
+            <label for="f-notes">Order notes (optional)</label>
+            <textarea id="f-notes" name="notes"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Payment (demo only) -->
+        <fieldset class="form-block">
+          <legend>Payment</legend>
+          <p class="card-hint">Demo only. Please don't enter a real card number.</p>
+
+          <div class="field">
+            <label for="f-card-name">Name on card</label>
+            <input id="f-card-name" type="text" autocomplete="off" required>
+          </div>
+
+          <div class="field">
+            <label for="f-card">Card number</label>
+            <input id="f-card" class="card-number" type="text" inputmode="numeric" autocomplete="off"
+                   placeholder="4242 4242 4242 4242" maxlength="23" required>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-exp">Expiry</label>
+              <input id="f-exp" type="text" inputmode="numeric" autocomplete="off" placeholder="MM / YY" maxlength="7" required>
+            </div>
+            <div class="field">
+              <label for="f-cvc">CVC</label>
+              <input id="f-cvc" type="text" inputmode="numeric" autocomplete="off" placeholder="123" maxlength="4" required>
+            </div>
+          </div>
+        </fieldset>
+
+        <p class="pay-error" id="pay-error" role="alert" hidden></p>
+        <button type="submit" class="btn" id="pay-btn">Pay (demo)</button>
+      </form>
+
+      <aside class="summary">
+        <h2>Your order</h2>
+        <ul class="summary-lines" id="summary-lines"></ul>
+        <div class="summary-total"><span>Total</span><span id="summary-total"></span></div>
+        <a class="summary-edit" href="menu.html#cart">Edit order</a>
+      </aside>
+
+    </div>
+  </main>
+
+
+  <!-- ======================================================================
+       VIEW: EMPTY CART
+       ====================================================================== -->
+  <main class="message" id="view-empty" hidden>
+    <h1>Your order is empty</h1>
+    <p>Add something from the menu to get started.</p>
+    <a class="btn" href="menu.html">Browse the menu</a>
+  </main>
+
+
+  <!-- ======================================================================
+       VIEW: CONFIRMATION
+       ====================================================================== -->
+  <main class="message" id="view-done" hidden>
+    <div class="message-tick">&#10003;</div>
+    <h1>Demo order complete</h1>
+    <p>Thanks <strong id="done-name"></strong>! Your order number is <strong id="done-id"></strong>.</p>
+    <p id="done-type"></p>
+    <p>Total: <strong id="done-total"></strong></p>
+
+    <p class="message-demo">This was a demo. No payment was taken and the shop has not received this order.</p>
+
+    <a class="btn" href="index.html">Back to home</a>
+    <a class="btn btn-outline" href="menu.html" style="margin-top:0.6rem">Order more</a>
+  </main>
+
+
+  <!-- ======================================================================
+       SCRIPT
+       ====================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ======================================================================
+         CONFIG
+         ORDER_ENDPOINT: optional URL that accepts a JSON POST of the order
+         (card details are never included). Leave empty for demo mode.
+         ====================================================================== */
+      const CONFIG = {
+        ORDER_ENDPOINT: '',
+        STORAGE_KEY: 'momo-cart-v1',
+        CHECKOUT_KEY: 'momo-checkout-v1',
+        LAST_ORDER_KEY: 'momo-last-order',
+        PROCESSING_MS: 1800,
+        DECLINE_TEST_CARD: '4000000000000002'
+      };
+
+
+      /* ======================================================================
+         HELPERS
+         ====================================================================== */
+      const $ = id => document.getElementById(id);
+
+      const money = cents => '$' + (cents / 100).toFixed(2);
+
+      const esc = str => String(str).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+      ));
+
+      const digitsOf = str => str.replace(/\D/g, '');
+
+      function luhn(num) {
+        let sum = 0;
+        let dbl = false;
+        for (let i = num.length - 1; i >= 0; i--) {
+          let d = +num[i];
+          if (dbl) { d *= 2; if (d > 9) d -= 9; }
+          sum += d;
+          dbl = !dbl;
+        }
+        return sum % 10 === 0;
+      }
+
+      function expiryValid(digits) {
+        if (digits.length !== 4) return false;
+        const mm = +digits.slice(0, 2);
+        const yy = 2000 + +digits.slice(2);
+        const now = new Date();
+        if (mm < 1 || mm > 12) return false;
+        return yy > now.getFullYear() || (yy === now.getFullYear() && mm >= now.getMonth() + 1);
+      }
+
+      function show(viewId) {
+        ['view-checkout', 'view-empty', 'view-done'].forEach(id => { $(id).hidden = id !== viewId; });
+        window.scrollTo(0, 0);
+      }
+
+
+      /* ======================================================================
+         CART  (written by menu.html)
+         ====================================================================== */
+      function loadLines() {
+        try {
+          const raw = JSON.parse(localStorage.getItem(CONFIG.CHECKOUT_KEY) || '[]');
+          return raw
+            .filter(l => l && typeof l.name === 'string' && l.price >= 0 && l.qty > 0)
+            .map(l => ({
+              id: String(l.id),
+              name: l.name,
+              price: l.price | 0,
+              qty: Math.min(99, l.qty | 0),
+              note: String(l.note || '')
+            }));
+        } catch (e) {
+          return [];
+        }
+      }
+
+      const lines = loadLines();
+      const total = lines.reduce((sum, l) => sum + l.price * l.qty, 0);
+
+
+      /* ======================================================================
+         RENDER
+         ====================================================================== */
+      function renderSummary() {
+        $('summary-lines').innerHTML = lines.map(l => `
+          <li class="summary-line">
+            <span>${l.qty} &times; ${esc(l.name)}${l.note ? `<small>${esc(l.note)}</small>` : ''}</span>
+            <span class="summary-price">${money(l.price * l.qty)}</span>
+          </li>`).join('');
+
+        $('summary-total').textContent = money(total);
+        $('pay-btn').textContent = 'Pay ' + money(total) + ' (demo)';
+      }
+
+      function renderDone(order) {
+        $('done-name').textContent = order.customer.name;
+        $('done-id').textContent = order.id;
+        $('done-total').textContent = money(order.total);
+        $('done-type').textContent = order.type === 'delivery'
+          ? 'Delivering to ' + order.customer.address
+          : 'Pickup order';
+        show('view-done');
+      }
+
+
+      /* ======================================================================
+         FORM
+         ====================================================================== */
+      const form       = $('pay-form');
+      const cardEl     = $('f-card');
+      const expEl      = $('f-exp');
+      const cvcEl      = $('f-cvc');
+      const addressEl  = $('f-address');
+      const errorEl    = $('pay-error');
+      const payBtn     = $('pay-btn');
+
+      // Input formatting
+      cardEl.addEventListener('input', () => {
+        cardEl.value = digitsOf(cardEl.value).slice(0, 19).replace(/(.{4})/g, '$1 ').trim();
+      });
+
+      expEl.addEventListener('input', () => {
+        const d = digitsOf(expEl.value).slice(0, 4);
+        expEl.value = d.length >= 3 ? d.slice(0, 2) + ' / ' + d.slice(2) : d;
+      });
+
+      cvcEl.addEventListener('input', () => {
+        cvcEl.value = digitsOf(cvcEl.value).slice(0, 4);
+      });
+
+      // Pickup / delivery toggle
+      form.addEventListener('change', e => {
+        if (e.target.name !== 'type') return;
+        const delivery = e.target.value === 'delivery';
+        $('address-field').hidden = !delivery;
+        addressEl.required = delivery;
+      });
+
+      // Clear custom validation messages as the user edits
+      form.addEventListener('input', e => {
+        if (e.target.setCustomValidity) e.target.setCustomValidity('');
+        errorEl.hidden = true;
+      });
+
+      function validateCard() {
+        cardEl.setCustomValidity('');
+        expEl.setCustomValidity('');
+        cvcEl.setCustomValidity('');
+
+        const num = digitsOf(cardEl.value);
+        if (num.length < 13 || !luhn(num)) cardEl.setCustomValidity('Enter a valid card number.');
+        if (!expiryValid(digitsOf(expEl.value))) expEl.setCustomValidity('Enter a valid expiry date (MM / YY).');
+        if (cvcEl.value.length < 3) cvcEl.setCustomValidity('Enter the 3 or 4 digit security code.');
+      }
+
+
+      /* ======================================================================
+         SUBMIT
+         ====================================================================== */
+      function buildOrder() {
+        const data = new FormData(form);
+        const type = data.get('type');
+
+        return {
+          id: 'MOMO-' + Date.now().toString(36).toUpperCase().slice(-5),
+          createdAt: new Date().toISOString(),
+          type: type,
+          customer: {
+            name: String(data.get('name')).trim(),
+            phone: String(data.get('phone')).trim(),
+            email: String(data.get('email')).trim(),
+            address: type === 'delivery' ? String(data.get('address')).trim() : ''
+          },
+          notes: String(data.get('notes')).trim(),
+          items: lines.map(l => ({ id: l.id, name: l.name, qty: l.qty, unitPrice: l.price, note: l.note.trim() })),
+          total: total,
+          payment: { method: 'demo', status: 'not charged' }   // never includes card data
+        };
+      }
+
+      async function pay() {
+        const declined = digitsOf(cardEl.value) === CONFIG.DECLINE_TEST_CARD;
+        const order = buildOrder();
+
+        payBtn.disabled = true;
+        payBtn.textContent = 'Processing…';
+        errorEl.hidden = true;
+
+        await new Promise(resolve => setTimeout(resolve, CONFIG.PROCESSING_MS));
+
+        try {
+          if (declined) throw new Error('declined');
+
+          if (CONFIG.ORDER_ENDPOINT) {
+            const res = await fetch(CONFIG.ORDER_ENDPOINT, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(order)
+            });
+            if (!res.ok) throw new Error('server');
+          }
+        } catch (err) {
+          errorEl.textContent = err.message === 'declined'
+            ? 'Your card was declined (demo). Try 4242 4242 4242 4242 instead.'
+            : 'Sorry, we could not send your order. Please try again.';
+          errorEl.hidden = false;
+          payBtn.disabled = false;
+          renderSummary();
+          return;
+        }
+
+        // Success: wipe card fields, save the order (no card data) and empty the cart.
+        form.reset();
+        try {
+          localStorage.setItem(CONFIG.LAST_ORDER_KEY, JSON.stringify(order));
+          localStorage.removeItem(CONFIG.STORAGE_KEY);
+          localStorage.removeItem(CONFIG.CHECKOUT_KEY);
+        } catch (e) { /* ignore */ }
+
+        renderDone(order);
+      }
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        validateCard();
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        pay();
+      });
+
+
+      /* ======================================================================
+         INIT
+         ====================================================================== */
+      if (lines.length === 0) {
+        show('view-empty');
+      } else {
+        renderSummary();
+        show('view-checkout');
+      }
+    })();
+  </script>
+
+</body>
+</html>
