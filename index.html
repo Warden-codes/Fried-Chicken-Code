@@ -10,21 +10,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
+    /* ==========================================================================
+       CONTENTS
+       1. Tokens
+       2. Base
+       3. Shared components (section, buttons)
+       4. Nav
+       5. Hero (+ featured rotator)
+       6. About
+       7. Reviews
+       8. Contact
+       9. Footer
+
+       Breakpoints used: 800px (tablet), 768px (rotator), 500px (mobile)
+       Each section keeps its own responsive rules at the end of its block.
+       ========================================================================== */
+
+
+    /* ==========================================================================
+       1. TOKENS
+       ========================================================================== */
+    :root {
+      /* Colour */
+      --black:  #0f0f0f;
+      --white:  #fafafa;
+      --red:    #c0392b;
+      --red-lt: #e74c3c;
+      --grey:   #5c5c5c;
+      --bg-off: #f4f2f0;
+
+      /* Type */
+      --font-serif: 'Noto Serif KR', serif;
+      --font-sans:  'Inter', sans-serif;
+
+      /* Layout */
+      --max:    1100px;
+      --radius: 3px;
+      --gutter: 2.5rem;
+    }
+
+
+    /* ==========================================================================
+       2. BASE
+       ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    :root {
-      --black: #0f0f0f;
-      --white: #fafafa;
-      --red: #c0392b;
-      --red-lt: #e74c3c;
-      --grey: #5c5c5c;
-      --bg-off: #f4f2f0;
-      --radius: 3px;
-      --max: 1100px;
     }
 
     html {
@@ -32,15 +64,106 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-sans);
       font-weight: 300;
       background: var(--white);
       color: var(--black);
       line-height: 1.6;
     }
 
-    /* NAV */
-    nav {
+
+    /* ==========================================================================
+       3. SHARED COMPONENTS
+       ========================================================================== */
+
+    /* Section wrapper */
+    section {
+      padding: 6rem var(--gutter);
+    }
+
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--grey);
+      max-width: 48ch;
+      margin-bottom: 3rem;
+      line-height: 1.75;
+      font-size: 0.95rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius);
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: var(--red-lt);
+    }
+
+    .btn-ghost {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-ghost:hover {
+      color: var(--white);
+    }
+
+    .btn-dark {
+      border: none;
+      background: var(--black);
+      color: var(--white);
+      padding: 0.9rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .btn-dark:hover {
+      background: var(--red);
+    }
+
+    @media (max-width: 500px) {
+      section {
+        padding: 4.5rem 1.4rem;
+      }
+    }
+
+
+    /* ==========================================================================
+       4. NAV
+       ========================================================================== */
+    .nav {
       position: fixed;
       top: 0;
       left: 0;
@@ -49,14 +172,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.1rem 2.5rem;
-      background: rgba(250,250,250,0.93);
+      padding: 1.1rem var(--gutter);
+      background: rgba(250, 250, 250, 0.93);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
 
     .nav-logo {
-      font-family: 'Noto Serif KR', serif;
+      font-family: var(--font-serif);
       font-size: 1.2rem;
       font-weight: 700;
       color: var(--black);
@@ -68,13 +191,13 @@
       color: var(--red);
     }
 
-    nav ul {
+    .nav-links {
       list-style: none;
       display: flex;
       gap: 2rem;
     }
 
-    nav ul a {
+    .nav-link {
       text-decoration: none;
       font-size: 0.85rem;
       font-weight: 400;
@@ -82,30 +205,53 @@
       transition: color 0.2s;
     }
 
-    nav ul a:hover {
+    .nav-link:hover {
       color: var(--black);
     }
 
-    .nav-order {
+    .nav-link.nav-order {
       background: var(--red);
-      color: var(--white) !important;
+      color: var(--white);
       padding: 0.5rem 1.2rem;
       border-radius: var(--radius);
-      font-weight: 500 !important;
-      transition: background 0.2s !important;
+      font-weight: 500;
+      transition: background 0.2s;
     }
 
-    .nav-order:hover {
-      background: var(--red-lt) !important;
+    .nav-link.nav-order:hover {
+      background: var(--red-lt);
     }
 
-    /* HERO */
-    #hero {
+    @media (max-width: 800px) {
+      .nav {
+        padding: 1rem 1.2rem;
+      }
+
+      .nav-links {
+        gap: 0.8rem;
+      }
+
+      .nav-link {
+        font-size: 0.72rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .nav-link:not(.nav-order) {
+        display: none;
+      }
+    }
+
+
+    /* ==========================================================================
+       5. HERO  (includes featured rotator)
+       ========================================================================== */
+    .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 7rem 2.5rem 3rem;
+      padding: 7rem var(--gutter) 3rem;
       background: var(--black);
       position: relative;
       overflow: hidden;
@@ -119,7 +265,7 @@
     }
 
     .hero-korean {
-      font-family: 'Noto Serif KR', serif;
+      font-family: var(--font-serif);
       font-size: 0.8rem;
       color: var(--red);
       letter-spacing: 0.15em;
@@ -127,8 +273,8 @@
       text-align: center;
     }
 
-    .hero-eyebrow-title {
-      font-family: 'Noto Serif KR', serif;
+    .hero-title {
+      font-family: var(--font-serif);
       font-size: clamp(1.6rem, 3.4vw, 2.4rem);
       font-weight: 700;
       color: var(--white);
@@ -146,84 +292,39 @@
       margin-top: 3rem;
     }
 
-    .btn-primary {
-      display: inline-block;
-      background: var(--red);
-      color: var(--white);
-      text-decoration: none;
-      padding: 0.85rem 2rem;
-      border-radius: var(--radius);
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
-
-    .btn-primary:hover {
-      background: var(--red-lt);
-    }
-
-    .btn-ghost {
-      display: inline-block;
-      color: rgba(255,255,255,0.5);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-
-    .btn-ghost:hover {
-      color: var(--white);
-    }
-
-    /* SHARED */
-    section {
-      padding: 6rem 2.5rem;
-    }
-
-    .section-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      color: var(--red);
-      margin-bottom: 0.8rem;
-    }
-
-    .section-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-    }
-
-    .section-desc {
-      color: var(--grey);
-      max-width: 48ch;
-      margin-bottom: 3rem;
-      line-height: 1.75;
-      font-size: 0.95rem;
-    }
-
-    /* FEATURED ROTATOR */
-    .fr-wrap {
+    /* --- Rotator: layout --- */
+    .featured {
       position: relative;
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
 
-    .fr-arrow {
+    .featured-viewport {
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .featured-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .featured-slide {
+      min-width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* --- Rotator: arrows --- */
+    .featured-arrow {
       flex: 0 0 auto;
       width: 52px;
       height: 52px;
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.18);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       background: transparent;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255, 255, 255, 0.6);
       font-size: 1.3rem;
       cursor: pointer;
       display: flex;
@@ -232,31 +333,16 @@
       transition: border-color 0.2s, color 0.2s, background 0.2s;
     }
 
-    .fr-arrow:hover {
+    .featured-arrow:hover {
       border-color: var(--red);
       color: var(--white);
-      background: rgba(192,57,43,0.15);
+      background: rgba(192, 57, 43, 0.15);
     }
 
-    .fr-track-wrap {
-      overflow: hidden;
-      flex: 1;
-    }
-
-    .fr-track {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    .fr-slide {
-      min-width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    .fr-card {
+    /* --- Rotator: card --- */
+    .featured-card {
       background: #171717;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-top: 4px solid var(--red);
       display: flex;
       align-items: stretch;
@@ -267,20 +353,20 @@
       transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
     }
 
-    .fr-card:hover {
+    .featured-card:hover {
       background: #1e1e1e;
       transform: scale(1.03) translateY(-6px);
-      box-shadow: 0 26px 50px rgba(0,0,0,0.55);
+      box-shadow: 0 26px 50px rgba(0, 0, 0, 0.55);
     }
 
-    .fr-photo {
+    .featured-photo {
       flex: 0 0 42%;
-      object-fit: cover;
       width: 42%;
       min-height: 100%;
+      object-fit: cover;
     }
 
-    .fr-body {
+    .featured-body {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -289,7 +375,7 @@
       padding: 3rem 3rem 2.6rem;
     }
 
-    .fr-cat {
+    .featured-cat {
       font-size: 0.75rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -297,8 +383,8 @@
       font-weight: 700;
     }
 
-    .fr-name {
-      font-family: 'Noto Serif KR', serif;
+    .featured-name {
+      font-family: var(--font-serif);
       font-size: clamp(1.6rem, 3vw, 2.3rem);
       font-weight: 700;
       color: #fff;
@@ -307,28 +393,29 @@
       letter-spacing: -0.01em;
     }
 
-    .fr-desc {
+    .featured-desc {
       font-size: 1rem;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255, 255, 255, 0.5);
       line-height: 1.75;
       max-width: 46ch;
     }
 
-    .fr-badge {
+    .featured-badge {
       display: inline-block;
+      align-self: flex-start;
+      margin-top: 0.3rem;
+      padding: 0.4rem 0.9rem;
       font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      padding: 0.4rem 0.9rem;
-      background: rgba(192,57,43,0.15);
+      background: rgba(192, 57, 43, 0.15);
       color: var(--red-lt);
-      border: 1px solid rgba(192,57,43,0.3);
-      align-self: flex-start;
-      margin-top: 0.3rem;
+      border: 1px solid rgba(192, 57, 43, 0.3);
     }
 
-    .fr-dots {
+    /* --- Rotator: dots --- */
+    .featured-dots {
       display: flex;
       gap: 10px;
       align-items: center;
@@ -336,50 +423,64 @@
       margin-top: 2rem;
     }
 
-    .fr-dot {
+    .featured-dot {
       width: 8px;
       height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      cursor: pointer;
-      border: none;
       padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
       transition: background 0.2s, transform 0.2s;
     }
 
-    .fr-dot.active {
+    .featured-dot.active {
       background: var(--red);
       transform: scale(1.3);
     }
 
+    /* --- Hero: responsive --- */
     @media (max-width: 768px) {
-      .fr-wrap {
+      .featured {
         gap: 0.6rem;
       }
 
-      .fr-arrow {
+      .featured-arrow {
         width: 40px;
         height: 40px;
         font-size: 1.1rem;
       }
 
-      .fr-card {
+      .featured-card {
         flex-direction: column;
         min-height: auto;
       }
 
-      .fr-photo {
+      .featured-photo {
         width: 100%;
         flex: 0 0 auto;
         height: 200px;
       }
 
-      .fr-body {
+      .featured-body {
         padding: 1.8rem 1.6rem 2rem;
       }
     }
 
-    /* ABOUT */
+    @media (max-width: 500px) {
+      .hero {
+        padding: 7rem 1.4rem 3rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+    }
+
+
+    /* ==========================================================================
+       6. ABOUT
+       ========================================================================== */
     .about-inner {
       max-width: var(--max);
       margin: 0 auto;
@@ -389,28 +490,29 @@
       align-items: center;
     }
 
+    /* Visual panel */
     .about-visual {
-      aspect-ratio: 4/5;
-      background: var(--black);
-      border-radius: 2px;
       position: relative;
-      overflow: hidden;
       display: flex;
       align-items: flex-end;
+      aspect-ratio: 4 / 5;
       padding: 2rem;
+      background: var(--black);
+      border-radius: 2px;
+      overflow: hidden;
     }
 
     .about-visual-bg {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(180deg, rgba(26,18,16,0.15) 0%, rgba(15,10,9,0.9) 100%),
+        linear-gradient(180deg, rgba(26, 18, 16, 0.15) 0%, rgba(15, 10, 9, 0.9) 100%),
         url('https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-74%404x.png?fit=900%2C720&ssl=1');
       background-size: cover;
       background-position: center;
     }
 
-    .about-stat-row {
+    .about-stats {
       position: relative;
       display: flex;
       gap: 2.5rem;
@@ -419,7 +521,7 @@
 
     .about-stat strong {
       display: block;
-      font-family: 'Noto Serif KR', serif;
+      font-family: var(--font-serif);
       font-size: 2rem;
       font-weight: 700;
       color: var(--white);
@@ -427,13 +529,14 @@
     }
 
     .about-stat span {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.38);
-      letter-spacing: 0.08em;
-      margin-top: 0.3rem;
       display: block;
+      margin-top: 0.3rem;
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.38);
+      letter-spacing: 0.08em;
     }
 
+    /* Text column */
     .about-divider {
       width: 2.5rem;
       height: 1px;
@@ -447,42 +550,55 @@
       line-height: 1.75;
     }
 
-    /* TESTIMONIALS */
-    .testi-grid {
+    @media (max-width: 800px) {
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
+
+    /* ==========================================================================
+       7. REVIEWS
+       ========================================================================== */
+    .reviews-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
       margin-top: 3rem;
     }
 
-    .testi-card {
-      border: 1px solid rgba(0,0,0,0.09);
+    .review-card {
+      border: 1px solid rgba(0, 0, 0, 0.09);
       border-radius: var(--radius);
       padding: 1.8rem;
     }
 
-    .testi-stars {
-      color: var(--red);
-      font-size: 0.82rem;
+    .review-stars {
       margin-bottom: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--red);
       letter-spacing: 0.08em;
     }
 
-    .testi-text {
+    .review-text {
+      margin-bottom: 1.2rem;
       font-size: 0.92rem;
       color: var(--grey);
       line-height: 1.7;
-      margin-bottom: 1.2rem;
     }
 
-    .testi-author {
+    .review-author {
       font-size: 0.72rem;
       color: #999;
       letter-spacing: 0.05em;
     }
 
-    /* CONTACT */
-    #contact {
+
+    /* ==========================================================================
+       8. CONTACT
+       ========================================================================== */
+    .contact {
       background: var(--bg-off);
     }
 
@@ -494,22 +610,36 @@
       gap: 5rem;
     }
 
+    /* Details column */
+    .contact-details {
+      margin-top: 2.5rem;
+    }
+
     .contact-block {
       margin-bottom: 1.5rem;
     }
 
     .contact-label {
+      margin-bottom: 0.3rem;
       font-size: 0.68rem;
       color: var(--red);
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      margin-bottom: 0.3rem;
     }
 
     .contact-value {
       font-size: 0.9rem;
       color: var(--grey);
       line-height: 1.7;
+    }
+
+    /* Form column */
+    .contact-subtitle {
+      margin: 0.4rem 0 1.6rem;
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
     }
 
     .contact-form {
@@ -521,10 +651,10 @@
     .contact-form input,
     .contact-form textarea {
       width: 100%;
-      border: 1px solid rgba(0,0,0,0.12);
-      background: var(--white);
       padding: 0.9rem 1rem;
-      font-family: 'Inter', sans-serif;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: var(--white);
+      font-family: var(--font-sans);
       font-size: 0.85rem;
       outline: none;
     }
@@ -539,85 +669,42 @@
       border-color: var(--red);
     }
 
-    .btn-dark {
-      border: none;
-      background: var(--black);
-      color: var(--white);
-      padding: 0.9rem 1.5rem;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
-
-    .btn-dark:hover {
-      background: var(--red);
-    }
-
-    /* FOOTER */
-    footer {
-      padding: 2rem 2.5rem;
-      background: var(--black);
-      color: rgba(255,255,255,0.35);
-      font-size: 0.72rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    footer a {
-      color: rgba(255,255,255,0.35);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    footer a:hover {
-      color: var(--white);
-    }
-
     @media (max-width: 800px) {
-      nav {
-        padding: 1rem 1.2rem;
-      }
-
-      nav ul {
-        gap: 0.8rem;
-      }
-
-      nav ul a {
-        font-size: 0.72rem;
-      }
-
-      .about-inner,
       .contact-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
       }
-
-      footer {
-        flex-direction: column;
-        text-align: center;
-      }
     }
 
-    @media (max-width: 500px) {
-      nav ul a:not(.nav-order) {
-        display: none;
-      }
 
-      section {
-        padding: 4.5rem 1.4rem;
-      }
+    /* ==========================================================================
+       9. FOOTER
+       ========================================================================== */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem var(--gutter);
+      background: var(--black);
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 0.72rem;
+    }
 
-      #hero {
-        padding-left: 1.4rem;
-        padding-right: 1.4rem;
-      }
+    .footer a {
+      color: rgba(255, 255, 255, 0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
 
-      .hero-actions {
+    .footer a:hover {
+      color: var(--white);
+    }
+
+    @media (max-width: 800px) {
+      .footer {
         flex-direction: column;
+        text-align: center;
       }
     }
   </style>
@@ -625,111 +712,85 @@
 
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#hero" class="nav-logo">
-      MOMO <span>치킨</span>
-    </a>
+  <!-- ======================================================================
+       NAV
+       ====================================================================== -->
+  <nav class="nav">
+    <a href="#hero" class="nav-logo">MOMO <span>치킨</span></a>
 
-    <ul>
-      <li><a href="menu.html">Menu</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#testimonials">Reviews</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="menu.html" class="nav-order">Order Now</a></li>
+    <ul class="nav-links">
+      <li><a href="menu.html" class="nav-link">Menu</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#reviews" class="nav-link">Reviews</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+      <li><a href="menu.html" class="nav-link nav-order">Order Now</a></li>
     </ul>
   </nav>
 
 
-  <!-- HERO -->
-  <section id="hero">
-
+  <!-- ======================================================================
+       HERO
+       ====================================================================== -->
+  <section id="hero" class="hero">
     <div class="hero-content">
 
-      <p class="hero-korean">
-        모모 치킨 · KOREAN FRIED CHICKEN
-      </p>
+      <p class="hero-korean">모모 치킨 · KOREAN FRIED CHICKEN</p>
 
-      <h1 class="hero-eyebrow-title">
+      <h1 class="hero-title">
         Korean flavour.<br>
         Australian roots.
       </h1>
 
-      <div class="fr-wrap">
+      <!-- Featured rotator (slides are built by the script at the bottom) -->
+      <div class="featured">
+        <button class="featured-arrow" id="featured-prev" aria-label="Previous">&#8592;</button>
 
-        <button class="fr-arrow" id="fr-prev" aria-label="Previous">
-          &#8592;
-        </button>
-
-        <div class="fr-track-wrap">
-          <div class="fr-track" id="fr-track"></div>
+        <div class="featured-viewport">
+          <div class="featured-track" id="featured-track"></div>
         </div>
 
-        <button class="fr-arrow" id="fr-next" aria-label="Next">
-          &#8594;
-        </button>
-
+        <button class="featured-arrow" id="featured-next" aria-label="Next">&#8594;</button>
       </div>
 
-      <div class="fr-dots" id="fr-dots"></div>
+      <div class="featured-dots" id="featured-dots"></div>
 
       <div class="hero-actions">
-
-        <!-- THIS NOW OPENS menu.html -->
-        <a href="menu.html" class="btn-primary">
-          Order Now
-        </a>
-
-        <a href="#testimonials" class="btn-ghost">
-          Read customer reviews
-        </a>
-
+        <a href="menu.html" class="btn btn-primary">Order Now</a>
+        <a href="#reviews" class="btn btn-ghost">Read customer reviews</a>
       </div>
 
     </div>
-
   </section>
 
 
-  <!-- ABOUT -->
-  <section id="about">
-
+  <!-- ======================================================================
+       ABOUT
+       ====================================================================== -->
+  <section id="about" class="about">
     <div class="about-inner">
 
       <div class="about-visual">
-
         <div class="about-visual-bg"></div>
 
-        <div class="about-stat-row">
-
+        <div class="about-stats">
           <div class="about-stat">
             <strong>모모</strong>
             <span>Est. locally</span>
           </div>
-
           <div class="about-stat">
             <strong>+61</strong>
             <span>Based in Australia</span>
           </div>
-
           <div class="about-stat">
             <strong>0</strong>
             <span>Shortcuts taken</span>
           </div>
-
         </div>
-
       </div>
 
       <div class="about-text">
-
-        <p class="section-label">
-          Our story
-        </p>
-
-        <h2 class="section-title">
-          Korean flavour, local roots.
-        </h2>
+        <p class="section-label">Our story</p>
+        <h2 class="section-title">Korean flavour, local roots.</h2>
 
         <div class="about-divider"></div>
 
@@ -740,244 +801,128 @@
         <p class="about-detail">
           Our menu pulls from Korean street food culture — toppoki, cupbap, bulgogi soups, and fried chicken that actually crunches. Everything is made fresh in-house. We don't believe in holding food that should be served hot.
         </p>
-
       </div>
 
     </div>
-
   </section>
 
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonials">
-
+  <!-- ======================================================================
+       REVIEWS
+       ====================================================================== -->
+  <section id="reviews" class="reviews">
     <div class="section-inner">
 
-      <p class="section-label">
-        What people say
-      </p>
+      <p class="section-label">What people say</p>
+      <h2 class="section-title">Customer Reviews</h2>
+      <p class="section-desc">Real customer feedback from Momo Chicken's Uber Eats listing.</p>
 
-      <h2 class="section-title">
-        Customer Reviews
-      </h2>
+      <div class="reviews-grid">
 
-      <p class="section-desc">
-        Real customer feedback from Momo Chicken's Uber Eats listing.
-      </p>
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">“The kimchi rice is so flavorful it’s delicious! The chicken pieces is so big too!”</p>
+          <div class="review-author">Winnie F. · Uber Eats</div>
+        </article>
 
-      <div class="testi-grid">
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">“The chicken has so much flavour and the rice is superb.”</p>
+          <div class="review-author">Keisha D. · Uber Eats</div>
+        </article>
 
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">“Such good chicken with the right level of crunch! The chips are so good too!”</p>
+          <div class="review-author">Rachel P. · Uber Eats</div>
+        </article>
 
-          <p class="testi-text">
-            “The kimchi rice is so flavorful it’s delicious! The chicken pieces is so big too!”
-          </p>
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">“Best Fried Chicken we have ever had and the flavours are amazing.”</p>
+          <div class="review-author">Monique V. · Uber Eats</div>
+        </article>
 
-          <div class="testi-author">
-            Winnie F. · Uber Eats
-          </div>
-        </div>
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">“Really good flavour and portion sizes are worth the price.”</p>
+          <div class="review-author">Callum J. · Uber Eats</div>
+        </article>
 
-
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-
-          <p class="testi-text">
-            “The chicken has so much flavour and the rice is superb.”
-          </p>
-
-          <div class="testi-author">
-            Keisha D. · Uber Eats
-          </div>
-        </div>
-
-
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-
-          <p class="testi-text">
-            “Such good chicken with the right level of crunch! The chips are so good too!”
-          </p>
-
-          <div class="testi-author">
-            Rachel P. · Uber Eats
-          </div>
-        </div>
-
-
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-
-          <p class="testi-text">
-            “Best Fried Chicken we have ever had and the flavours are amazing.”
-          </p>
-
-          <div class="testi-author">
-            Monique V. · Uber Eats
-          </div>
-        </div>
-
-
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-
-          <p class="testi-text">
-            “Really good flavour and portion sizes are worth the price.”
-          </p>
-
-          <div class="testi-author">
-            Callum J. · Uber Eats
-          </div>
-        </div>
-
-
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-
-          <p class="testi-text">
-            “10/10 arrived hot and tastes incredible.”
-          </p>
-
-          <div class="testi-author">
-            Hannah N. · Uber Eats
-          </div>
-        </div>
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">“10/10 arrived hot and tastes incredible.”</p>
+          <div class="review-author">Hannah N. · Uber Eats</div>
+        </article>
 
       </div>
-
     </div>
-
   </section>
 
 
-  <!-- CONTACT -->
-  <section id="contact">
+  <!-- ======================================================================
+       CONTACT
+       ====================================================================== -->
+  <section id="contact" class="contact">
+    <div class="contact-grid">
 
-    <div class="section-inner">
+      <!-- Details -->
+      <div class="contact-info">
+        <p class="section-label">Find us</p>
+        <h2 class="section-title">Come in or reach out</h2>
 
-      <div class="contact-grid">
-
-        <div>
-
-          <p class="section-label">
-            Find us
-          </p>
-
-          <h2 class="section-title">
-            Come in or reach out
-          </h2>
-
-          <div style="margin-top: 2.5rem;">
-
-            <div class="contact-block">
-              <p class="contact-label">
-                Address
-              </p>
-
-              <p class="contact-value">
-                Your Street Address<br>
-                Suburb, State, Australia
-              </p>
-            </div>
-
-
-            <div class="contact-block">
-
-              <p class="contact-label">
-                Hours
-              </p>
-
-              <p class="contact-value">
-                Tuesday – Sunday<br>
-                11:00am – 9:00pm
-              </p>
-
-            </div>
-
-
-            <div class="contact-block">
-
-              <p class="contact-label">
-                Phone
-              </p>
-
-              <p class="contact-value">
-                +61 (0) 000 000 000
-              </p>
-
-            </div>
-
-
-            <div class="contact-block">
-
-              <p class="contact-label">
-                Email
-              </p>
-
-              <p class="contact-value">
-                hello@momofiredchicken.com.au
-              </p>
-
-            </div>
-
+        <div class="contact-details">
+          <div class="contact-block">
+            <p class="contact-label">Address</p>
+            <p class="contact-value">
+              Your Street Address<br>
+              Suburb, State, Australia
+            </p>
           </div>
 
-        </div>
-
-
-        <div>
-
-          <p class="section-label">
-            Send a message
-          </p>
-
-          <h3 style="font-family:'Noto Serif KR',serif; font-size:1.4rem; font-weight:700; margin-bottom:1.6rem; margin-top:0.4rem; letter-spacing:-0.01em;">
-            Catering? Questions? Say 안녕.
-          </h3>
-
-          <div class="contact-form">
-
-            <input
-              type="text"
-              placeholder="Your name"
-            />
-
-            <input
-              type="email"
-              placeholder="Email address"
-            />
-
-            <input
-              type="tel"
-              placeholder="Phone number"
-            />
-
-            <textarea
-              placeholder="Your message"
-            ></textarea>
-
-            <button class="btn-dark">
-              Send Message
-            </button>
-
+          <div class="contact-block">
+            <p class="contact-label">Hours</p>
+            <p class="contact-value">
+              Tuesday – Sunday<br>
+              11:00am – 9:00pm
+            </p>
           </div>
 
-        </div>
+          <div class="contact-block">
+            <p class="contact-label">Phone</p>
+            <p class="contact-value">+61 (0) 000 000 000</p>
+          </div>
 
+          <div class="contact-block">
+            <p class="contact-label">Email</p>
+            <p class="contact-value">hello@momofiredchicken.com.au</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-message">
+        <p class="section-label">Send a message</p>
+        <h3 class="contact-subtitle">Catering? Questions? Say 안녕.</h3>
+
+        <form class="contact-form">
+          <input type="text"  placeholder="Your name" />
+          <input type="email" placeholder="Email address" />
+          <input type="tel"   placeholder="Phone number" />
+          <textarea placeholder="Your message"></textarea>
+          <button type="button" class="btn btn-dark">Send Message</button>
+        </form>
       </div>
 
     </div>
-
   </section>
 
 
-  <!-- FOOTER -->
-  <footer>
-
-    <span>
-      © 2026 Momo Fried Chicken. All rights reserved.
-    </span>
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="footer">
+    <span>© 2026 Momo Fried Chicken. All rights reserved.</span>
 
     <span>
       <a href="#">Instagram</a>
@@ -986,172 +931,108 @@
       &nbsp;·&nbsp;
       <a href="#">TikTok</a>
     </span>
-
   </footer>
 
 
-  <!-- FEATURED ROTATOR -->
+  <!-- ======================================================================
+       SCRIPT: Featured rotator
+       ====================================================================== -->
   <script>
+    (function () {
+      'use strict';
 
-    (function() {
+      /* ---------- Data ---------- */
+      const IMG_BASE = 'https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/';
 
       const items = [
-
         {
-          cat: "Chicken",
-          name: "Garlic Soy Grilled Chicken",
-          desc: "Glazed in a rich garlic soy marinade. Smoky, savoury, and worth every bite.",
-          badge: "Most ordered",
-          img: "https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-72%404x.png?fit=900%2C720&ssl=1"
+          cat: 'Chicken',
+          name: 'Garlic Soy Grilled Chicken',
+          desc: 'Glazed in a rich garlic soy marinade. Smoky, savoury, and worth every bite.',
+          badge: 'Most ordered',
+          img: IMG_BASE + 'Asset-72%404x.png?fit=900%2C720&ssl=1'
         },
-
         {
-          cat: "Burgers",
-          name: "Nashville Burger",
-          desc: "Hot-glazed crispy chicken fillet, pickles, and slaw. Brings the heat, stays in balance.",
-          badge: "Customer favourite",
-          img: "https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-13%404x.png?fit=900%2C869&ssl=1"
+          cat: 'Burgers',
+          name: 'Nashville Burger',
+          desc: 'Hot-glazed crispy chicken fillet, pickles, and slaw. Brings the heat, stays in balance.',
+          badge: 'Customer favourite',
+          img: IMG_BASE + 'Asset-13%404x.png?fit=900%2C869&ssl=1'
         },
-
         {
-          cat: "Rice Bowls",
-          name: "Kimchi Chicken Fried Rice",
-          desc: "Wok-fried rice with kimchi, chicken, and sesame oil. Punchy and deeply satisfying.",
-          badge: "Korean classic",
-          img: "https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-73%404x.png?fit=900%2C721&ssl=1"
+          cat: 'Rice Bowls',
+          name: 'Kimchi Chicken Fried Rice',
+          desc: 'Wok-fried rice with kimchi, chicken, and sesame oil. Punchy and deeply satisfying.',
+          badge: 'Korean classic',
+          img: IMG_BASE + 'Asset-73%404x.png?fit=900%2C721&ssl=1'
         },
-
         {
-          cat: "Sides",
-          name: "Rose Toppoki",
-          desc: "Creamy, mildly spicy rice cakes — the version that converts first-timers.",
-          badge: "Converts everyone",
-          img: "https://i0.wp.com/momochicken.com.au/wp-content/uploads/2026/04/Asset-11%404x.png?fit=900%2C867&ssl=1"
+          cat: 'Sides',
+          name: 'Rose Toppoki',
+          desc: 'Creamy, mildly spicy rice cakes — the version that converts first-timers.',
+          badge: 'Converts everyone',
+          img: IMG_BASE + 'Asset-11%404x.png?fit=900%2C867&ssl=1'
         }
-
       ];
 
+      /* ---------- Elements ---------- */
+      const track   = document.getElementById('featured-track');
+      const dotsEl  = document.getElementById('featured-dots');
+      const prevBtn = document.getElementById('featured-prev');
+      const nextBtn = document.getElementById('featured-next');
 
-      const track =
-        document.getElementById('fr-track');
+      let current = 0;
+      let dots = [];
 
-      const dotsEl =
-        document.getElementById('fr-dots');
+      /* ---------- Rendering ---------- */
+      function createSlide(item) {
+        const slide = document.createElement('div');
+        slide.className = 'featured-slide';
 
-      const prevBtn =
-        document.getElementById('fr-prev');
-
-      const nextBtn =
-        document.getElementById('fr-next');
-
-
-      items.forEach((item, i) => {
-
-        const slideEl =
-          document.createElement('div');
-
-        slideEl.className =
-          'fr-slide';
-
-
-        const card =
-          document.createElement('div');
-
-        card.className =
-          'fr-card';
-
-
-        card.innerHTML = `
-          <img
-            class="fr-photo"
-            src="${item.img}"
-            alt="${item.name}"
-          />
-
-          <div class="fr-body">
-
-            <span class="fr-cat">
-              ${item.cat}
-            </span>
-
-            <div class="fr-name">
-              ${item.name}
+        slide.innerHTML = `
+          <div class="featured-card">
+            <img class="featured-photo" src="${item.img}" alt="${item.name}" />
+            <div class="featured-body">
+              <span class="featured-cat">${item.cat}</span>
+              <div class="featured-name">${item.name}</div>
+              <p class="featured-desc">${item.desc}</p>
+              <span class="featured-badge">${item.badge}</span>
             </div>
-
-            <p class="fr-desc">
-              ${item.desc}
-            </p>
-
-            <span class="fr-badge">
-              ${item.badge}
-            </span>
-
           </div>
         `;
 
-
-        slideEl.appendChild(card);
-
-        track.appendChild(slideEl);
-
-
-        const dot =
-          document.createElement('button');
-
-        dot.className =
-          'fr-dot' +
-          (i === 0 ? ' active' : '');
-
-        dot.addEventListener(
-          'click',
-          () => goTo(i)
-        );
-
-        dotsEl.appendChild(dot);
-
-      });
-
-
-      let current = 0;
-
-      const dots =
-        dotsEl.querySelectorAll('.fr-dot');
-
-
-      function goTo(i) {
-
-        current =
-          (i + items.length) %
-          items.length;
-
-        track.style.transform =
-          `translateX(-${current * 100}%)`;
-
-        dots.forEach((d, idx) => {
-
-          d.classList.toggle(
-            'active',
-            idx === current
-          );
-
-        });
-
+        return slide;
       }
 
+      function createDot(index) {
+        const dot = document.createElement('button');
+        dot.className = 'featured-dot';
+        dot.setAttribute('aria-label', 'Go to slide ' + (index + 1));
+        dot.addEventListener('click', () => goTo(index));
+        return dot;
+      }
 
-      prevBtn.addEventListener(
-        'click',
-        () => goTo(current - 1)
-      );
+      function render() {
+        items.forEach((item, i) => {
+          track.appendChild(createSlide(item));
+          dotsEl.appendChild(createDot(i));
+        });
+        dots = Array.from(dotsEl.children);
+      }
 
+      /* ---------- Navigation ---------- */
+      function goTo(index) {
+        current = (index + items.length) % items.length;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+      }
 
-      nextBtn.addEventListener(
-        'click',
-        () => goTo(current + 1)
-      );
-
+      /* ---------- Init ---------- */
+      render();
+      goTo(0);
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
     })();
-
   </script>
 
 </body>
