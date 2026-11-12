@@ -17,7 +17,7 @@
        3. Nav (+ cart button)
        4. Hero
        5. Menu (intro, categories, items, add / quantity controls)
-       6. Cart drawer (lines, checkout form, confirmation)
+       6. Cart drawer (lines, payment link) + floating cart bar
        ========================================================================== */
 
 
@@ -442,9 +442,7 @@
 
     .cart-line-price { white-space: nowrap; }
 
-    .cart-line-note,
-    .field input,
-    .field textarea {
+    .cart-line-note {
       width: 100%;
       padding: 0.65rem 0.8rem;
       border: 1px solid var(--line);
@@ -456,9 +454,7 @@
 
     .cart-line-note { margin-top: 0.7rem; }
 
-    .cart-line-note:focus,
-    .field input:focus,
-    .field textarea:focus { border-color: var(--red); }
+    .cart-line-note:focus { border-color: var(--red); }
 
     .cart-line-foot {
       display: flex;
@@ -497,6 +493,8 @@
     .btn-order {
       display: block;
       width: 100%;
+      text-align: center;
+      text-decoration: none;
       padding: 0.95rem 1rem;
       border: none;
       background: var(--red);
@@ -511,90 +509,37 @@
     .btn-order:hover:not(:disabled) { background: var(--red-lt); }
     .btn-order:disabled { opacity: 0.6; cursor: wait; }
 
-    .btn-link {
-      display: block;
-      margin: 0.9rem auto 0;
-      border: none;
-      background: transparent;
-      font-size: 0.8rem;
+    .cart-demo-note {
+      margin-top: 0.8rem;
+      font-size: 0.74rem;
       color: var(--grey);
-      text-decoration: underline;
+      text-align: center;
     }
 
-    .btn-link:hover { color: var(--black); }
-
-    /* Checkout form */
-    .checkout-form { display: flex; flex-direction: column; gap: 1rem; padding-top: 1rem; }
-
-    .field label,
-    .field legend {
-      display: block;
-      margin-bottom: 0.35rem;
-      font-size: 0.68rem;
-      color: var(--red);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .field fieldset { border: none; }
-
-    .field textarea { min-height: 80px; resize: vertical; }
-
-    .choice-row { display: flex; gap: 0.6rem; }
-
-    .choice {
-      flex: 1;
+    /* Floating cart bar (appears once something is in the order) */
+    .cart-bar {
+      position: fixed;
+      left: 50%;
+      bottom: 1.2rem;
+      z-index: 40;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 0.8rem;
-      border: 1px solid var(--line);
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-
-    .choice:has(input:checked) { border-color: var(--red); background: rgba(192, 57, 43, 0.06); }
-
-    .choice input { accent-color: var(--red); }
-
-    .checkout-summary {
-      padding: 0.9rem 1rem;
-      background: var(--bg-off);
-      font-size: 0.82rem;
-      color: var(--grey);
-    }
-
-    .checkout-summary li { display: flex; justify-content: space-between; gap: 1rem; list-style: none; }
-
-    .cart-error {
-      padding: 0.7rem 0.9rem;
-      border: 1px solid rgba(192, 57, 43, 0.35);
-      background: rgba(192, 57, 43, 0.08);
-      font-size: 0.82rem;
-      color: var(--red);
-    }
-
-    /* Confirmation */
-    .cart-done { padding: 2.5rem 0 1rem; text-align: center; }
-
-    .cart-done-tick {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 3.4rem;
-      height: 3.4rem;
-      margin-bottom: 1rem;
-      border-radius: 50%;
-      background: var(--red);
+      gap: 1.2rem;
+      padding: 0.85rem 1.4rem;
+      border: none;
+      border-radius: 999px;
+      background: var(--black);
       color: var(--white);
-      font-size: 1.6rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+      transform: translateX(-50%);
+      transition: background 0.2s;
     }
 
-    .cart-done h3 { margin-bottom: 0.4rem; font-family: var(--font-serif); font-size: 1.4rem; }
-
-    .cart-done p { margin-bottom: 0.4rem; font-size: 0.9rem; color: var(--grey); }
-
-    .cart-done strong { color: var(--black); }
+    .cart-bar[hidden] { display: none; }
+    .cart-bar:hover { background: var(--red); }
+    .cart-bar-cta { font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.75rem; }
 
     @media (max-width: 500px) {
       .cart-header, .cart-footer { padding-left: 1.1rem; padding-right: 1.1rem; }
@@ -649,6 +594,16 @@
 
 
   <!-- ======================================================================
+       FLOATING CART BAR
+       ====================================================================== -->
+  <button type="button" class="cart-bar" id="cart-bar" data-act="open-cart" hidden>
+    <span id="cart-bar-label"></span>
+    <span id="cart-bar-total"></span>
+    <span class="cart-bar-cta">View order &rarr;</span>
+  </button>
+
+
+  <!-- ======================================================================
        CART DRAWER
        ====================================================================== -->
   <div class="cart-overlay" id="cart-overlay" data-act="close-cart"></div>
@@ -673,14 +628,13 @@
 
       /* ======================================================================
          CONFIG
-         ORDER_ENDPOINT: URL that accepts a JSON POST of the order (your
-         backend, Formspree, Zapier webhook, etc.). Leave empty to run in
-         demo mode, where the order is only saved in this browser.
+         CHECKOUT_URL: the separate payment page the cart links to.
+         The cart is handed over through localStorage (CHECKOUT_KEY).
          ====================================================================== */
       const CONFIG = {
-        ORDER_ENDPOINT: '',
+        CHECKOUT_URL: 'checkout.html',
         STORAGE_KEY: 'momo-cart-v1',
-        LAST_ORDER_KEY: 'momo-last-order'
+        CHECKOUT_KEY: 'momo-checkout-v1'
       };
 
 
@@ -761,16 +715,10 @@
       /* ======================================================================
          STATE
          cart: { [itemId]: { qty, note } }
-         view: 'cart' | 'checkout' | 'done'
          ====================================================================== */
       const state = {
         cart: {},
-        open: false,
-        view: 'cart',
-        submitting: false,
-        error: '',
-        order: null,
-        form: { name: '', phone: '', type: 'pickup', address: '', notes: '' }
+        open: false
       };
 
 
@@ -801,7 +749,19 @@
       }
 
       function saveCart() {
-        try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state.cart)); } catch (e) { /* ignore */ }
+        // Full lines (name + price) are saved separately so checkout.html can read them.
+        const lines = cartIds().map(id => ({
+          id: id,
+          name: ITEMS[id].name,
+          price: ITEMS[id].price,
+          qty: state.cart[id].qty,
+          note: state.cart[id].note
+        }));
+
+        try {
+          localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state.cart));
+          localStorage.setItem(CONFIG.CHECKOUT_KEY, JSON.stringify(lines));
+        } catch (e) { /* storage unavailable: ignore */ }
       }
 
 
@@ -883,75 +843,11 @@
         }).join('')}</ul>`;
       }
 
-      function checkoutHTML() {
-        const f = state.form;
-        const delivery = f.type === 'delivery';
-
-        return `
-          <form class="checkout-form" id="checkout-form" novalidate>
-            <div class="field">
-              <label for="f-name">Name</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required value="${esc(f.name)}">
-            </div>
-            <div class="field">
-              <label for="f-phone">Phone</label>
-              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required minlength="8" value="${esc(f.phone)}">
-            </div>
-            <div class="field">
-              <fieldset>
-                <legend>Order type</legend>
-                <div class="choice-row">
-                  <label class="choice"><input type="radio" name="type" value="pickup" ${delivery ? '' : 'checked'}> Pickup</label>
-                  <label class="choice"><input type="radio" name="type" value="delivery" ${delivery ? 'checked' : ''}> Delivery</label>
-                </div>
-              </fieldset>
-            </div>
-            ${delivery ? `
-              <div class="field">
-                <label for="f-address">Delivery address</label>
-                <input id="f-address" name="address" type="text" autocomplete="street-address" required value="${esc(f.address)}">
-              </div>` : ''}
-            <div class="field">
-              <label for="f-notes">Order notes (optional)</label>
-              <textarea id="f-notes" name="notes">${esc(f.notes)}</textarea>
-            </div>
-
-            <ul class="checkout-summary">
-              ${cartIds().map(id => `
-                <li><span>${state.cart[id].qty} &times; ${esc(ITEMS[id].name)}</span><span>${money(ITEMS[id].price * state.cart[id].qty)}</span></li>`).join('')}
-            </ul>
-
-            ${state.error ? `<p class="cart-error" role="alert">${esc(state.error)}</p>` : ''}
-          </form>`;
-      }
-
-      function doneHTML() {
-        const o = state.order;
-        return `
-          <div class="cart-done">
-            <div class="cart-done-tick">&#10003;</div>
-            <h3>Order placed</h3>
-            <p>Thanks ${esc(o.customer.name)}! Your order number is <strong>${esc(o.id)}</strong>.</p>
-            <p>${o.type === 'delivery' ? 'Delivering to ' + esc(o.customer.address) : 'We will have it ready for pickup.'}</p>
-            <p>Total: <strong>${money(o.total)}</strong></p>
-          </div>`;
-      }
-
       function renderCart() {
         const body   = $('cart-body');
         const footer = $('cart-footer');
-        const empty  = cartIds().length === 0;
 
-        $('cart-title').textContent =
-          state.view === 'checkout' ? 'Checkout' : state.view === 'done' ? 'Thank you' : 'Your order';
-
-        if (state.view === 'done') {
-          body.innerHTML = doneHTML();
-          footer.innerHTML = `<button type="button" class="btn-order" data-act="close-cart">Done</button>`;
-          return;
-        }
-
-        if (empty) {
+        if (cartIds().length === 0) {
           body.innerHTML = `
             <div class="cart-empty">
               <p>Your order is empty.</p>
@@ -961,21 +857,19 @@
           return;
         }
 
-        if (state.view === 'checkout') {
-          body.innerHTML = checkoutHTML();
-          footer.innerHTML = `
-            <div class="cart-total"><span>Total</span><span>${money(cartTotal())}</span></div>
-            <button type="submit" form="checkout-form" class="btn-order" ${state.submitting ? 'disabled' : ''}>
-              ${state.submitting ? 'Placing order…' : 'Place order'}
-            </button>
-            <button type="button" class="btn-link" data-act="back">Back to order</button>`;
-          return;
-        }
-
         body.innerHTML = cartLinesHTML();
         footer.innerHTML = `
           <div class="cart-total"><span>Subtotal</span><span>${money(cartTotal())}</span></div>
-          <button type="button" class="btn-order" data-act="checkout">Checkout</button>`;
+          <a class="btn-order" href="${CONFIG.CHECKOUT_URL}">Go to payment</a>
+          <p class="cart-demo-note">Opens our demo checkout. No real payment is taken.</p>`;
+      }
+
+      // Floating bar: visible whenever the cart has items and the drawer is closed.
+      function renderCartBar() {
+        const count = cartCount();
+        $('cart-bar').hidden = count === 0 || state.open;
+        $('cart-bar-label').textContent = count + (count === 1 ? ' item' : ' items');
+        $('cart-bar-total').textContent = money(cartTotal());
       }
 
       function setDrawer(open) {
@@ -986,10 +880,10 @@
         document.body.style.overflow = open ? 'hidden' : '';
 
         if (open) {
-          if (state.view === 'done') state.view = 'cart';
           renderCart();
           $('cart').querySelector('.cart-close').focus();
         }
+        renderCartBar();
       }
 
 
@@ -1001,6 +895,7 @@
         $('cart-count').textContent = cartCount();
         if (changedId) renderAction(changedId);
         if (state.open) renderCart();
+        renderCartBar();
       }
 
       function changeQty(id, delta) {
@@ -1020,74 +915,6 @@
 
 
       /* ======================================================================
-         PLACE ORDER
-         ====================================================================== */
-      function buildOrder() {
-        const f = state.form;
-        return {
-          id: 'MOMO-' + Date.now().toString(36).toUpperCase().slice(-5),
-          createdAt: new Date().toISOString(),
-          type: f.type,
-          customer: {
-            name: f.name.trim(),
-            phone: f.phone.trim(),
-            address: f.type === 'delivery' ? f.address.trim() : ''
-          },
-          notes: f.notes.trim(),
-          items: cartIds().map(id => ({
-            id: id,
-            name: ITEMS[id].name,
-            qty: state.cart[id].qty,
-            unitPrice: ITEMS[id].price,
-            note: state.cart[id].note.trim()
-          })),
-          total: cartTotal()
-        };
-      }
-
-      async function placeOrder() {
-        const form = $('checkout-form');
-        state.error = '';
-
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-
-        const order = buildOrder();
-        state.submitting = true;
-        renderCart();
-
-        try {
-          if (CONFIG.ORDER_ENDPOINT) {
-            const res = await fetch(CONFIG.ORDER_ENDPOINT, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(order)
-            });
-            if (!res.ok) throw new Error('Server responded ' + res.status);
-          }
-
-          try { localStorage.setItem(CONFIG.LAST_ORDER_KEY, JSON.stringify(order)); } catch (e) { /* ignore */ }
-
-          const ids = cartIds();
-          state.cart = {};
-          state.order = order;
-          state.view = 'done';
-          state.submitting = false;
-          saveCart();
-          $('cart-count').textContent = 0;
-          ids.forEach(renderAction);
-          renderCart();
-        } catch (err) {
-          state.submitting = false;
-          state.error = 'Sorry, we could not send your order. Please try again.';
-          renderCart();
-        }
-      }
-
-
-      /* ======================================================================
          EVENTS
          ====================================================================== */
       document.addEventListener('click', e => {
@@ -1097,45 +924,31 @@
         const id = el.dataset.id;
 
         switch (el.dataset.act) {
-          case 'add':        changeQty(id, 1);  break;
+          case 'add':
           case 'inc':        changeQty(id, 1);  break;
           case 'dec':        changeQty(id, -1); break;
           case 'remove':     removeLine(id);    break;
-          case 'open-cart':  state.view = 'cart'; setDrawer(true); break;
+          case 'open-cart':  setDrawer(true);   break;
           case 'close-cart': setDrawer(false);  break;
-          case 'checkout':   state.view = 'checkout'; renderCart(); break;
-          case 'back':       state.view = 'cart'; state.error = ''; renderCart(); break;
         }
       });
 
-      // Typing in drawer fields updates state without re-rendering (keeps focus).
+      // Typing a note updates state without re-rendering (keeps focus).
       $('cart').addEventListener('input', e => {
-        const t = e.target;
-        if (t.dataset.note && state.cart[t.dataset.note]) {
-          state.cart[t.dataset.note].note = t.value;
+        const id = e.target.dataset.note;
+        if (id && state.cart[id]) {
+          state.cart[id].note = e.target.value;
           saveCart();
-        } else if (t.name in state.form && t.type !== 'radio') {
-          state.form[t.name] = t.value;
-        }
-      });
-
-      // Switching pickup / delivery re-renders to show or hide the address field.
-      $('cart').addEventListener('change', e => {
-        if (e.target.name === 'type') {
-          state.form.type = e.target.value;
-          renderCart();
-        }
-      });
-
-      $('cart').addEventListener('submit', e => {
-        if (e.target.id === 'checkout-form') {
-          e.preventDefault();
-          placeOrder();
         }
       });
 
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && state.open) setDrawer(false);
+      });
+
+      // Coming back from checkout with the browser's back button: refresh the cart.
+      window.addEventListener('pageshow', e => {
+        if (e.persisted) location.reload();
       });
 
 
@@ -1145,6 +958,10 @@
       loadCart();
       renderMenu();
       $('cart-count').textContent = cartCount();
+      renderCartBar();
+
+      // menu.html#cart opens the drawer straight away (used by the checkout page's "Edit order").
+      if (location.hash === '#cart') setDrawer(true);
     })();
   </script>
 
