@@ -4,384 +4,1149 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Momo Fried Chicken — Menu</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  <style>
+    /* ==========================================================================
+       CONTENTS
+       1. Tokens
+       2. Base
+       3. Nav (+ cart button)
+       4. Hero
+       5. Menu (intro, categories, items, add / quantity controls)
+       6. Cart drawer (lines, checkout form, confirmation)
+       ========================================================================== */
+
+
+    /* ==========================================================================
+       1. TOKENS
+       ========================================================================== */
     :root {
-      --black: #0f0f0f;
-      --white: #fafafa;
-      --red: #c0392b;
+      --black:  #0f0f0f;
+      --white:  #fafafa;
+      --red:    #c0392b;
       --red-lt: #e74c3c;
-      --grey: #5c5c5c;
+      --grey:   #5c5c5c;
       --bg-off: #f4f2f0;
-      --max: 1100px;
+      --line:   rgba(0, 0, 0, 0.12);
+
+      --font-serif: 'Noto Serif KR', serif;
+      --font-sans:  'Inter', sans-serif;
+
+      --max:    1100px;
+      --gutter: 2.5rem;
     }
 
+
+    /* ==========================================================================
+       2. BASE
+       ========================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-sans);
       font-weight: 300;
       background: var(--bg-off);
       color: var(--black);
       line-height: 1.6;
     }
 
-    nav {
+    button { font-family: inherit; cursor: pointer; }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+
+    /* ==========================================================================
+       3. NAV
+       ========================================================================== */
+    .nav {
       position: sticky;
       top: 0;
       z-index: 10;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2.5rem;
-      background: rgba(250,250,250,.96);
+      padding: 1rem var(--gutter);
+      background: rgba(250, 250, 250, 0.96);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,0,0,.08);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
-    .nav-logo img { height: 42px; width: auto; display: block; }
-    .back-link {
+    .nav-logo img { display: block; height: 42px; width: auto; }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background: transparent;
       color: var(--black);
-      text-decoration: none;
-      font-size: .85rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      border: 1px solid rgba(0,0,0,.15);
-      padding: .55rem 1rem;
-      transition: .2s;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
-    .back-link:hover { background: var(--black); color: var(--white); }
 
+    .nav-btn:hover { background: var(--black); color: var(--white); }
+
+    .nav-cart {
+      background: var(--red);
+      border-color: var(--red);
+      color: var(--white);
+    }
+
+    .nav-cart:hover { background: var(--red-lt); border-color: var(--red-lt); }
+
+    .nav-cart-count {
+      min-width: 1.4rem;
+      padding: 0 0.4rem;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--red);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.4rem;
+    }
+
+    @media (max-width: 500px) {
+      .nav { padding: 0.8rem 1rem; }
+      .nav-logo img { height: 34px; }
+      .nav-btn { padding: 0.5rem 0.75rem; font-size: 0.78rem; }
+    }
+
+
+    /* ==========================================================================
+       4. HERO
+       ========================================================================== */
     .menu-hero {
+      padding: 7rem 1.5rem 5rem;
       background: var(--black);
       color: var(--white);
       text-align: center;
-      padding: 7rem 1.5rem 5rem;
       border-bottom: 7px solid var(--red);
     }
+
     .menu-hero-korean {
-      font-family: 'Noto Serif KR', serif;
+      margin-bottom: 0.8rem;
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
       color: var(--red);
-      letter-spacing: .15em;
-      font-size: .85rem;
-      margin-bottom: .8rem;
+      letter-spacing: 0.15em;
     }
+
     .menu-hero h1 {
-      font-family: 'Noto Serif KR', serif;
+      margin-bottom: 1.2rem;
+      font-family: var(--font-serif);
       font-size: clamp(2.4rem, 6vw, 5rem);
       line-height: 1;
-      margin-bottom: 1.2rem;
     }
-    .menu-hero p {
+
+    .menu-hero p:last-child {
       max-width: 650px;
       margin: auto;
+      font-size: 0.98rem;
       color: #d5d5d5;
-      font-size: .98rem;
     }
 
-    #menu {
+
+    /* ==========================================================================
+       5. MENU
+       ========================================================================== */
+    .menu {
+      padding: 6rem var(--gutter);
       background: var(--bg-off);
-      padding: 6rem 2.5rem;
     }
 
+    /* Intro */
     .menu-intro {
       max-width: 680px;
       margin: 0 auto 3.5rem;
       text-align: center;
     }
 
-    .menu-intro .section-label {
-      color: var(--red);
-    }
-
-    .menu-intro .section-title {
-      margin-bottom: 1rem;
-    }
-
-    .menu-intro p {
-      color: var(--grey);
+    .menu-intro p:last-child {
       font-size: 0.95rem;
+      color: var(--grey);
     }
 
+    /* Category */
     .menu-category {
       max-width: var(--max);
       margin: 0 auto 4rem;
     }
 
-    .menu-category:last-child {
-      margin-bottom: 0;
-    }
+    .menu-category:last-child { margin-bottom: 0; }
 
     .menu-category-heading {
       display: flex;
       align-items: baseline;
       gap: 1rem;
       margin-bottom: 1.4rem;
-      padding-bottom: .8rem;
-      border-bottom: 1px solid rgba(0,0,0,.12);
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--line);
     }
 
     .menu-category-heading h3 {
-      font-family: 'Noto Serif KR', serif;
+      font-family: var(--font-serif);
       font-size: 1.45rem;
       font-weight: 700;
     }
 
     .menu-category-heading span {
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
       color: var(--red);
-      font-family: 'Noto Serif KR', serif;
-      font-size: .82rem;
     }
 
+    /* Grid */
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1px;
-      background: rgba(0,0,0,.12);
-      border: 1px solid rgba(0,0,0,.12);
+      background: var(--line);
+      border: 1px solid var(--line);
     }
 
+    /* Item */
     .menu-item {
-      background: var(--white);
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 1.25rem;
       padding: 1.35rem 1.5rem;
-      transition: transform .2s, box-shadow .2s;
+      background: var(--white);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .menu-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.07);
       position: relative;
       z-index: 1;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
     }
 
-    .menu-item-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: baseline;
-    }
+    .menu-item-main { flex: 1; min-width: 0; }
 
     .menu-item-name {
-      font-family: 'Noto Serif KR', serif;
+      font-family: var(--font-serif);
       font-size: 1rem;
       font-weight: 700;
     }
 
     .menu-item-korean {
+      margin-left: 0.45rem;
+      font-family: var(--font-serif);
+      font-size: 0.72rem;
       color: var(--red);
-      font-family: 'Noto Serif KR', serif;
-      font-size: .72rem;
-      margin-left: .45rem;
-      white-space: nowrap;
-    }
-
-    .menu-price {
-      font-size: .95rem;
-      font-weight: 500;
       white-space: nowrap;
     }
 
     .menu-desc {
-      margin-top: .45rem;
-      color: var(--grey);
-      font-size: .82rem;
-      line-height: 1.55;
       max-width: 620px;
+      margin-top: 0.45rem;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: var(--grey);
     }
 
     .menu-note {
       display: inline-block;
-      margin-top: .65rem;
+      margin-top: 0.65rem;
+      font-size: 0.7rem;
       color: var(--red);
-      font-size: .7rem;
-      letter-spacing: .04em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
     }
 
+    /* Item side: price + add button */
+    .menu-item-side {
+      display: flex;
+      flex: 0 0 auto;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .menu-price {
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .btn-add {
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--red);
+      background: var(--red);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+
+    .btn-add:hover { background: var(--red-lt); }
+
+    /* Quantity stepper (menu items + cart lines) */
+    .qty {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--red);
+    }
+
+    .qty button {
+      width: 2rem;
+      height: 2rem;
+      border: none;
+      background: transparent;
+      color: var(--red);
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .qty button:hover { background: var(--red); color: var(--white); }
+
+    .qty output {
+      min-width: 2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
     @media (max-width: 700px) {
-      #menu { padding: 4.5rem 1.2rem; }
+      .menu { padding: 4.5rem 1.2rem; }
       .menu-grid { grid-template-columns: 1fr; }
-      .menu-category-heading { gap: .6rem; }
+      .menu-category-heading { gap: 0.6rem; }
       .menu-item { padding: 1.15rem; }
-      .menu-item-korean { display: block; margin: .2rem 0 0; }
+      .menu-item-korean { display: block; margin: 0.2rem 0 0; }
     }
 
 
-    .menu-content { padding-top: 4rem; }
+    /* ==========================================================================
+       6. CART DRAWER
+       ========================================================================== */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .cart {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      width: min(440px, 100%);
+      background: var(--white);
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.2);
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .cart.open { transform: translateX(0); }
+
+    /* Header */
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--line);
+      border-top: 4px solid var(--red);
+    }
+
+    .cart-title {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .cart-close {
+      width: 2.2rem;
+      height: 2.2rem;
+      border: none;
+      background: transparent;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--grey);
+    }
+
+    .cart-close:hover { color: var(--black); }
+
+    /* Body */
+    .cart-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem 1.5rem 1.5rem;
+    }
+
+    .cart-empty {
+      padding: 3rem 0;
+      text-align: center;
+      color: var(--grey);
+      font-size: 0.92rem;
+    }
+
+    .cart-empty .btn-add { margin-top: 1.2rem; }
+
+    .cart-lines { list-style: none; }
+
+    .cart-line {
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-line-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .cart-line-name { font-family: var(--font-serif); font-weight: 700; }
+
+    .cart-line-price { white-space: nowrap; }
+
+    .cart-line-note,
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 0.65rem 0.8rem;
+      border: 1px solid var(--line);
+      background: var(--white);
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      outline: none;
+    }
+
+    .cart-line-note { margin-top: 0.7rem; }
+
+    .cart-line-note:focus,
+    .field input:focus,
+    .field textarea:focus { border-color: var(--red); }
+
+    .cart-line-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.7rem;
+    }
+
+    .cart-remove {
+      border: none;
+      background: transparent;
+      font-size: 0.75rem;
+      color: var(--grey);
+      text-decoration: underline;
+    }
+
+    .cart-remove:hover { color: var(--red); }
+
+    /* Footer */
+    .cart-footer {
+      padding: 1.2rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--line);
+      background: var(--bg-off);
+    }
+
+    .cart-footer:empty { display: none; }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .btn-order {
+      display: block;
+      width: 100%;
+      padding: 0.95rem 1rem;
+      border: none;
+      background: var(--red);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+
+    .btn-order:hover:not(:disabled) { background: var(--red-lt); }
+    .btn-order:disabled { opacity: 0.6; cursor: wait; }
+
+    .btn-link {
+      display: block;
+      margin: 0.9rem auto 0;
+      border: none;
+      background: transparent;
+      font-size: 0.8rem;
+      color: var(--grey);
+      text-decoration: underline;
+    }
+
+    .btn-link:hover { color: var(--black); }
+
+    /* Checkout form */
+    .checkout-form { display: flex; flex-direction: column; gap: 1rem; padding-top: 1rem; }
+
+    .field label,
+    .field legend {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.68rem;
+      color: var(--red);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .field fieldset { border: none; }
+
+    .field textarea { min-height: 80px; resize: vertical; }
+
+    .choice-row { display: flex; gap: 0.6rem; }
+
+    .choice {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 0.8rem;
+      border: 1px solid var(--line);
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .choice:has(input:checked) { border-color: var(--red); background: rgba(192, 57, 43, 0.06); }
+
+    .choice input { accent-color: var(--red); }
+
+    .checkout-summary {
+      padding: 0.9rem 1rem;
+      background: var(--bg-off);
+      font-size: 0.82rem;
+      color: var(--grey);
+    }
+
+    .checkout-summary li { display: flex; justify-content: space-between; gap: 1rem; list-style: none; }
+
+    .cart-error {
+      padding: 0.7rem 0.9rem;
+      border: 1px solid rgba(192, 57, 43, 0.35);
+      background: rgba(192, 57, 43, 0.08);
+      font-size: 0.82rem;
+      color: var(--red);
+    }
+
+    /* Confirmation */
+    .cart-done { padding: 2.5rem 0 1rem; text-align: center; }
+
+    .cart-done-tick {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.4rem;
+      height: 3.4rem;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-size: 1.6rem;
+    }
+
+    .cart-done h3 { margin-bottom: 0.4rem; font-family: var(--font-serif); font-size: 1.4rem; }
+
+    .cart-done p { margin-bottom: 0.4rem; font-size: 0.9rem; color: var(--grey); }
+
+    .cart-done strong { color: var(--black); }
+
+    @media (max-width: 500px) {
+      .cart-header, .cart-footer { padding-left: 1.1rem; padding-right: 1.1rem; }
+      .cart-body { padding-left: 1.1rem; padding-right: 1.1rem; }
+    }
   </style>
 </head>
+
 <body>
-  <nav>
+
+  <!-- ======================================================================
+       NAV
+       ====================================================================== -->
+  <nav class="nav">
     <a href="index.html" class="nav-logo">
       <img src="https://i0.wp.com/momochicken.com.au/wp-content/uploads/2022/07/logo.png?fit=265%2C143&ssl=1" alt="Momo Fried Chicken">
     </a>
-    <a href="index.html" class="back-link">Back to Home</a>
+
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn">Back to Home</a>
+      <button type="button" class="nav-btn nav-cart" data-act="open-cart" aria-label="Open your order">
+        Order <span class="nav-cart-count" id="cart-count">0</span>
+      </button>
+    </div>
   </nav>
 
+
+  <!-- ======================================================================
+       HERO
+       ====================================================================== -->
   <header class="menu-hero">
     <p class="menu-hero-korean">모모 치킨 · KOREAN FRIED CHICKEN</p>
     <h1>The Momo Menu</h1>
     <p>A Korean flavour experience built around crunch, comfort, heat and the dishes made for sharing.</p>
   </header>
 
-  <main class="menu-content">
-  <!-- MENU -->
-  <section id="menu">
-    <div class="menu-intro">
-      <p class="section-label">The Momo experience · 모모의 맛</p>
-      <h2 class="section-title">A taste of Korea, made to share.</h2>
-      <p>From golden Korean fried chicken to bubbling soups, rice dishes and classic sides, every plate brings together the crunch, heat, sweetness and comfort of Korean flavour.</p>
-    </div>
 
-    <div class="menu-category">
-      <div class="menu-category-heading">
-        <h3>Chicken</h3>
-        <span>치킨</span>
+  <!-- ======================================================================
+       MENU  (categories and items are rendered from MENU in the script)
+       ====================================================================== -->
+  <main>
+    <section id="menu" class="menu">
+      <div class="menu-intro">
+        <p class="section-label">The Momo experience · 모모의 맛</p>
+        <h2 class="section-title">A taste of Korea, made to share.</h2>
+        <p>From golden Korean fried chicken to bubbling soups, rice dishes and classic sides, every plate brings together the crunch, heat, sweetness and comfort of Korean flavour.</p>
       </div>
-      <div class="menu-grid">
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Boneless Three Set</span><span class="menu-item-korean">순살 3종 세트</span></div><span class="menu-price">$44.90</span></div>
-          <p class="menu-desc">Boneless chicken with three flavours: Fried, Soy Garlic and Marinade (mild Korean sweet chilli).</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Snowing Three Set</span><span class="menu-item-korean">스노잉 3종 세트</span></div><span class="menu-price">$44.90</span></div>
-          <p class="menu-desc">Boneless chicken with three snowing seasonings: cheese, onion, chilli or corn powder.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Whole Boneless Candy Chicken</span><span class="menu-item-korean">순살 캔디 치킨</span></div><span class="menu-price">$40.90</span></div>
-          <p class="menu-desc">Boneless chicken with rice cakes, coated in Momo's sweet candy sauce.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Whole Boneless Honey Chicken</span><span class="menu-item-korean">순살 허니 치킨</span></div><span class="menu-price">$40.90</span></div>
-          <p class="menu-desc">Boneless chicken with rice cakes coated in honey sauce.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Whole Fried Bone Chicken</span><span class="menu-item-korean">후라이드 치킨</span></div><span class="menu-price">$38.90</span></div>
-          <p class="menu-desc">18 pieces of whole fried chicken with your choice of up to two coated flavours.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Whole Fried Boneless Chicken</span><span class="menu-item-korean">순살 후라이드</span></div><span class="menu-price">$38.90</span></div>
-          <p class="menu-desc">Whole boneless chicken with your choice of up to two coated flavours.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Half Boneless Candy Chicken</span><span class="menu-item-korean">반마리 캔디 치킨</span></div><span class="menu-price">$24.90</span></div>
-          <p class="menu-desc">Boneless chicken with rice cakes coated in candy sauce.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Half Boneless Honey Chicken</span><span class="menu-item-korean">반마리 허니 치킨</span></div><span class="menu-price">$24.90</span></div>
-          <p class="menu-desc">Boneless chicken with rice cakes coated in honey sauce.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Half Fried Chicken</span><span class="menu-item-korean">반마리 후라이드</span></div><span class="menu-price">$22.90</span></div>
-          <p class="menu-desc">9 pieces of fried chicken with your choice of one coated flavour.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Korean Snack Pack — Small</span><span class="menu-item-korean">한국식 스낵팩</span></div><span class="menu-price">$19.90</span></div>
-          <p class="menu-desc">Crunchy chips topped with boneless chicken and your choice of sauce. Recommended with cheese.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Korean Snack Pack — Large</span><span class="menu-item-korean">한국식 스낵팩</span></div><span class="menu-price">$24.90</span></div>
-          <p class="menu-desc">A larger serving of crunchy chips topped with boneless chicken and your choice of sauce.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Tenders</span><span class="menu-item-korean">치킨 텐더</span></div><span class="menu-price">$18.90</span></div>
-          <p class="menu-desc">Five pieces of chicken tenderloin served with special sauce.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Bites</span><span class="menu-item-korean">치킨 바이트</span></div><span class="menu-price">$17.90</span></div>
-          <p class="menu-desc">Chicken breast bites with cheese and special sauce.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Wings</span><span class="menu-item-korean">치킨 윙</span></div><span class="menu-price">$18.90</span></div>
-          <p class="menu-desc">Seven pieces of chicken wings coated in your chosen sauce.</p>
-        </article>
-      </div>
-    </div>
 
-    <div class="menu-category">
-      <div class="menu-category-heading">
-        <h3>Meals</h3>
-        <span>식사</span>
-      </div>
-      <div class="menu-grid">
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Noodle Soup</span><span class="menu-item-korean">닭칼국수</span></div><span class="menu-price">$22.90</span></div>
-          <p class="menu-desc">Noodles, chicken broth, vegetables and chicken.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Volcano Chicken</span><span class="menu-item-korean">화산 치킨</span></div><span class="menu-price">$34.90</span></div>
-          <p class="menu-desc">Chicken thigh, onion, rice cakes, shallot and zucchini in Momo Volcano Sauce.</p>
-          <span class="menu-note">Hot</span>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Soup</span><span class="menu-item-korean">닭곰탕</span></div><span class="menu-price">$20.90</span></div>
-          <p class="menu-desc">Chicken broth, vegetables and chicken breast, served with steamed rice.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Hot Stone Bulgogi Beef Soup</span><span class="menu-item-korean">불고기 전골</span></div><span class="menu-price">$23.90</span></div>
-          <p class="menu-desc">Glass noodles, vegetables and bulgogi beef. Includes rice.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Kimchi Soup</span><span class="menu-item-korean">김치찌개</span></div><span class="menu-price">$22.90</span></div>
-          <p class="menu-desc">Warm kimchi soup served with rice.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Stir-Fry Noodles</span><span class="menu-item-korean">볶음 우동</span></div><span class="menu-price">$21.90</span></div>
-          <p class="menu-desc">Udon noodles, chicken and vegetables tossed in Momo special sauce.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Bibimbap</span><span class="menu-item-korean">비빔밥</span></div><span class="menu-price">$21.90</span></div>
-          <p class="menu-desc">Rice, sesame oil, vegetables, mushroom, cabbage, fried egg and your selected protein.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Beef Bulgogi Rice</span><span class="menu-item-korean">소불고기 덮밥</span></div><span class="menu-price">$22.90</span></div>
-          <p class="menu-desc">Bulgogi beef with rice, egg and fresh vegetables.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Kimchi Chicken Fried Rice</span><span class="menu-item-korean">김치 치킨 볶음밥</span></div><span class="menu-price">$22.90</span></div>
-          <p class="menu-desc">Chicken thigh, kimchi, rice and spring onion.</p>
-        </article>
-        <article class="menu-item">
-          <div class="menu-item-top"><div><span class="menu-item-name">Chicken Mayo Rice</span><span class="menu-item-korean">치킨 마요 덮밥</span></div><span class="menu-price">$22.90</span></div>
-          <p class="menu-desc">Boneless chicken, egg, cabbage, spring onion, mayo and Momo special teriyaki sauce.</p>
-        </article>
-      </div>
-    </div>
-
-    <div class="menu-category">
-      <div class="menu-category-heading">
-        <h3>Sides</h3>
-        <span>사이드</span>
-      </div>
-      <div class="menu-grid">
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Toppoki</span><span class="menu-item-korean">떡볶이</span></div><span class="menu-price">$20.90</span></div><p class="menu-desc">Rice cakes, fish cake and spring onion in toppoki sauce.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Rose Toppoki</span><span class="menu-item-korean">로제 떡볶이</span></div><span class="menu-price">$22.90</span></div><p class="menu-desc">Rice cakes, fish cake and spring onion in creamy rose toppoki sauce.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Kimchi Pancake</span><span class="menu-item-korean">김치전</span></div><span class="menu-price">$22.90</span></div><p class="menu-desc">Crispy Korean-style pancake with onion, kimchi, carrot and spring onion.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Korean Pancake</span><span class="menu-item-korean">야채전</span></div><span class="menu-price">$20.90</span></div><p class="menu-desc">Korean-style vegetable pancake with onion, carrot and spring onion.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Corn Cheese</span><span class="menu-item-korean">콘치즈</span></div><span class="menu-price">$17.90</span></div><p class="menu-desc">Sweet corn with cheese, butter and mayo.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Loaded Fries</span><span class="menu-item-korean">치킨 로디드 프라이</span></div><span class="menu-price">$16.90</span></div><p class="menu-desc">Crispy fries loaded with diced chicken thigh and cheese.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Stick Chips</span><span class="menu-item-korean">스틱 칩스</span></div><span class="menu-price">$12.90</span></div><p class="menu-desc">Crispy chips seasoned with Momo seasoning.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Sweet Potato</span><span class="menu-item-korean">고구마 튀김</span></div><span class="menu-price">$14.90</span></div><p class="menu-desc">Crispy sweet potato chips.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Rice Ball</span><span class="menu-item-korean">주먹밥</span></div><span class="menu-price">$11.90</span></div><p class="menu-desc">Rice with sesame oil, seaweed flakes, radish and mayo.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Steamed Egg</span><span class="menu-item-korean">계란찜</span></div><span class="menu-price">$17.90</span></div><p class="menu-desc">Steamed egg with sesame oil, sesame seed, shallot, onion, carrot and zucchini.</p></article>
-      </div>
-    </div>
-
-    <div class="menu-category">
-      <div class="menu-category-heading">
-        <h3>Burgers &amp; Bao</h3>
-        <span>버거 &amp; 바오</span>
-      </div>
-      <div class="menu-grid">
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Momo Chicken Slaw Burger</span><span class="menu-item-korean">모모 치킨 슬로 버거</span></div><span class="menu-price">$22.90</span></div><p class="menu-desc">Milk bun, lettuce, tomato, fried chicken thigh, marinade sauce and coleslaw.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Momo Beef Bulgogi Burger</span><span class="menu-item-korean">불고기 버거</span></div><span class="menu-price">$20.90</span></div><p class="menu-desc">Milk bun, lettuce, tomato and bulgogi patty.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Momo Bao Buns</span><span class="menu-item-korean">치킨 바오</span></div><span class="menu-price">$19.90</span></div><p class="menu-desc">Three bao buns with boneless chicken, lettuce and aioli. Choose three sauces.</p></article>
-        <article class="menu-item"><div class="menu-item-top"><div><span class="menu-item-name">Momo Chicken Cheese Burger</span><span class="menu-item-korean">치킨 치즈 버거</span></div><span class="menu-price">$20.90</span></div><p class="menu-desc">Milk bun, lettuce, tomato, fried chicken thigh and cheese.</p></article>
-      </div>
-    </div>
-  </section>
+      <div id="menu-root"></div>
+    </section>
   </main>
+
+
+  <!-- ======================================================================
+       CART DRAWER
+       ====================================================================== -->
+  <div class="cart-overlay" id="cart-overlay" data-act="close-cart"></div>
+
+  <aside class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true">
+    <div class="cart-header">
+      <h2 class="cart-title" id="cart-title">Your order</h2>
+      <button type="button" class="cart-close" data-act="close-cart" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="cart-body" id="cart-body" aria-live="polite"></div>
+    <div class="cart-footer" id="cart-footer"></div>
+  </aside>
+
+
+  <!-- ======================================================================
+       SCRIPT
+       ====================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ======================================================================
+         CONFIG
+         ORDER_ENDPOINT: URL that accepts a JSON POST of the order (your
+         backend, Formspree, Zapier webhook, etc.). Leave empty to run in
+         demo mode, where the order is only saved in this browser.
+         ====================================================================== */
+      const CONFIG = {
+        ORDER_ENDPOINT: '',
+        STORAGE_KEY: 'momo-cart-v1',
+        LAST_ORDER_KEY: 'momo-last-order'
+      };
+
+
+      /* ======================================================================
+         MENU DATA   (prices in cents)
+         ====================================================================== */
+      const MENU = [
+        {
+          id: 'chicken', name: 'Chicken', ko: '치킨',
+          items: [
+            { name: 'Boneless Three Set', ko: '순살 3종 세트', price: 4490, desc: 'Boneless chicken with three flavours: Fried, Soy Garlic and Marinade (mild Korean sweet chilli).' },
+            { name: 'Snowing Three Set', ko: '스노잉 3종 세트', price: 4490, desc: 'Boneless chicken with three snowing seasonings: cheese, onion, chilli or corn powder.' },
+            { name: 'Whole Boneless Candy Chicken', ko: '순살 캔디 치킨', price: 4090, desc: "Boneless chicken with rice cakes, coated in Momo's sweet candy sauce." },
+            { name: 'Whole Boneless Honey Chicken', ko: '순살 허니 치킨', price: 4090, desc: 'Boneless chicken with rice cakes coated in honey sauce.' },
+            { name: 'Whole Fried Bone Chicken', ko: '후라이드 치킨', price: 3890, desc: '18 pieces of whole fried chicken with your choice of up to two coated flavours.' },
+            { name: 'Whole Fried Boneless Chicken', ko: '순살 후라이드', price: 3890, desc: 'Whole boneless chicken with your choice of up to two coated flavours.' },
+            { name: 'Half Boneless Candy Chicken', ko: '반마리 캔디 치킨', price: 2490, desc: 'Boneless chicken with rice cakes coated in candy sauce.' },
+            { name: 'Half Boneless Honey Chicken', ko: '반마리 허니 치킨', price: 2490, desc: 'Boneless chicken with rice cakes coated in honey sauce.' },
+            { name: 'Half Fried Chicken', ko: '반마리 후라이드', price: 2290, desc: '9 pieces of fried chicken with your choice of one coated flavour.' },
+            { name: 'Korean Snack Pack — Small', ko: '한국식 스낵팩', price: 1990, desc: 'Crunchy chips topped with boneless chicken and your choice of sauce. Recommended with cheese.' },
+            { name: 'Korean Snack Pack — Large', ko: '한국식 스낵팩', price: 2490, desc: 'A larger serving of crunchy chips topped with boneless chicken and your choice of sauce.' },
+            { name: 'Chicken Tenders', ko: '치킨 텐더', price: 1890, desc: 'Five pieces of chicken tenderloin served with special sauce.' },
+            { name: 'Chicken Bites', ko: '치킨 바이트', price: 1790, desc: 'Chicken breast bites with cheese and special sauce.' },
+            { name: 'Chicken Wings', ko: '치킨 윙', price: 1890, desc: 'Seven pieces of chicken wings coated in your chosen sauce.' }
+          ]
+        },
+        {
+          id: 'meals', name: 'Meals', ko: '식사',
+          items: [
+            { name: 'Chicken Noodle Soup', ko: '닭칼국수', price: 2290, desc: 'Noodles, chicken broth, vegetables and chicken.' },
+            { name: 'Volcano Chicken', ko: '화산 치킨', price: 3490, desc: 'Chicken thigh, onion, rice cakes, shallot and zucchini in Momo Volcano Sauce.', note: 'Hot' },
+            { name: 'Chicken Soup', ko: '닭곰탕', price: 2090, desc: 'Chicken broth, vegetables and chicken breast, served with steamed rice.' },
+            { name: 'Hot Stone Bulgogi Beef Soup', ko: '불고기 전골', price: 2390, desc: 'Glass noodles, vegetables and bulgogi beef. Includes rice.' },
+            { name: 'Kimchi Soup', ko: '김치찌개', price: 2290, desc: 'Warm kimchi soup served with rice.' },
+            { name: 'Stir-Fry Noodles', ko: '볶음 우동', price: 2190, desc: 'Udon noodles, chicken and vegetables tossed in Momo special sauce.' },
+            { name: 'Bibimbap', ko: '비빔밥', price: 2190, desc: 'Rice, sesame oil, vegetables, mushroom, cabbage, fried egg and your selected protein.' },
+            { name: 'Beef Bulgogi Rice', ko: '소불고기 덮밥', price: 2290, desc: 'Bulgogi beef with rice, egg and fresh vegetables.' },
+            { name: 'Kimchi Chicken Fried Rice', ko: '김치 치킨 볶음밥', price: 2290, desc: 'Chicken thigh, kimchi, rice and spring onion.' },
+            { name: 'Chicken Mayo Rice', ko: '치킨 마요 덮밥', price: 2290, desc: 'Boneless chicken, egg, cabbage, spring onion, mayo and Momo special teriyaki sauce.' }
+          ]
+        },
+        {
+          id: 'sides', name: 'Sides', ko: '사이드',
+          items: [
+            { name: 'Toppoki', ko: '떡볶이', price: 2090, desc: 'Rice cakes, fish cake and spring onion in toppoki sauce.' },
+            { name: 'Rose Toppoki', ko: '로제 떡볶이', price: 2290, desc: 'Rice cakes, fish cake and spring onion in creamy rose toppoki sauce.' },
+            { name: 'Kimchi Pancake', ko: '김치전', price: 2290, desc: 'Crispy Korean-style pancake with onion, kimchi, carrot and spring onion.' },
+            { name: 'Korean Pancake', ko: '야채전', price: 2090, desc: 'Korean-style vegetable pancake with onion, carrot and spring onion.' },
+            { name: 'Corn Cheese', ko: '콘치즈', price: 1790, desc: 'Sweet corn with cheese, butter and mayo.' },
+            { name: 'Loaded Fries', ko: '치킨 로디드 프라이', price: 1690, desc: 'Crispy fries loaded with diced chicken thigh and cheese.' },
+            { name: 'Stick Chips', ko: '스틱 칩스', price: 1290, desc: 'Crispy chips seasoned with Momo seasoning.' },
+            { name: 'Sweet Potato', ko: '고구마 튀김', price: 1490, desc: 'Crispy sweet potato chips.' },
+            { name: 'Rice Ball', ko: '주먹밥', price: 1190, desc: 'Rice with sesame oil, seaweed flakes, radish and mayo.' },
+            { name: 'Steamed Egg', ko: '계란찜', price: 1790, desc: 'Steamed egg with sesame oil, sesame seed, shallot, onion, carrot and zucchini.' }
+          ]
+        },
+        {
+          id: 'burgers', name: 'Burgers & Bao', ko: '버거 & 바오',
+          items: [
+            { name: 'Momo Chicken Slaw Burger', ko: '모모 치킨 슬로 버거', price: 2290, desc: 'Milk bun, lettuce, tomato, fried chicken thigh, marinade sauce and coleslaw.' },
+            { name: 'Momo Beef Bulgogi Burger', ko: '불고기 버거', price: 2090, desc: 'Milk bun, lettuce, tomato and bulgogi patty.' },
+            { name: 'Momo Bao Buns', ko: '치킨 바오', price: 1990, desc: 'Three bao buns with boneless chicken, lettuce and aioli. Choose three sauces.' },
+            { name: 'Momo Chicken Cheese Burger', ko: '치킨 치즈 버거', price: 2090, desc: 'Milk bun, lettuce, tomato, fried chicken thigh and cheese.' }
+          ]
+        }
+      ];
+
+      // Give every item a stable id (e.g. "chicken-1") and build a lookup.
+      const ITEMS = {};
+      MENU.forEach(cat => {
+        cat.items.forEach((item, i) => {
+          item.id = cat.id + '-' + (i + 1);
+          ITEMS[item.id] = item;
+        });
+      });
+
+
+      /* ======================================================================
+         STATE
+         cart: { [itemId]: { qty, note } }
+         view: 'cart' | 'checkout' | 'done'
+         ====================================================================== */
+      const state = {
+        cart: {},
+        open: false,
+        view: 'cart',
+        submitting: false,
+        error: '',
+        order: null,
+        form: { name: '', phone: '', type: 'pickup', address: '', notes: '' }
+      };
+
+
+      /* ======================================================================
+         HELPERS
+         ====================================================================== */
+      const $ = id => document.getElementById(id);
+
+      const money = cents => '$' + (cents / 100).toFixed(2);
+
+      const esc = str => String(str).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+      ));
+
+      const cartIds   = () => Object.keys(state.cart);
+      const cartCount = () => cartIds().reduce((n, id) => n + state.cart[id].qty, 0);
+      const cartTotal = () => cartIds().reduce((sum, id) => sum + ITEMS[id].price * state.cart[id].qty, 0);
+
+      function loadCart() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '{}');
+          Object.keys(saved).forEach(id => {
+            if (ITEMS[id] && saved[id] && saved[id].qty > 0) {
+              state.cart[id] = { qty: Math.min(99, saved[id].qty | 0), note: String(saved[id].note || '') };
+            }
+          });
+        } catch (e) { /* storage unavailable: start with an empty cart */ }
+      }
+
+      function saveCart() {
+        try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state.cart)); } catch (e) { /* ignore */ }
+      }
+
+
+      /* ======================================================================
+         RENDER: MENU
+         ====================================================================== */
+      function itemHTML(item) {
+        return `
+          <article class="menu-item">
+            <div class="menu-item-main">
+              <div>
+                <span class="menu-item-name">${esc(item.name)}</span>
+                <span class="menu-item-korean">${esc(item.ko)}</span>
+              </div>
+              <p class="menu-desc">${esc(item.desc)}</p>
+              ${item.note ? `<span class="menu-note">${esc(item.note)}</span>` : ''}
+            </div>
+            <div class="menu-item-side">
+              <span class="menu-price">${money(item.price)}</span>
+              <div class="menu-action" data-slot="${item.id}"></div>
+            </div>
+          </article>`;
+      }
+
+      function renderMenu() {
+        $('menu-root').innerHTML = MENU.map(cat => `
+          <div class="menu-category">
+            <div class="menu-category-heading">
+              <h3>${esc(cat.name)}</h3>
+              <span>${esc(cat.ko)}</span>
+            </div>
+            <div class="menu-grid">${cat.items.map(itemHTML).join('')}</div>
+          </div>`).join('');
+
+        Object.keys(ITEMS).forEach(renderAction);
+      }
+
+      // The Add button turns into a quantity stepper once an item is in the cart.
+      function renderAction(id) {
+        const slot = document.querySelector(`[data-slot="${id}"]`);
+        if (!slot) return;
+        const line = state.cart[id];
+        const name = esc(ITEMS[id].name);
+
+        slot.innerHTML = line
+          ? `<div class="qty">
+               <button type="button" data-act="dec" data-id="${id}" aria-label="Remove one ${name}">&minus;</button>
+               <output>${line.qty}</output>
+               <button type="button" data-act="inc" data-id="${id}" aria-label="Add one ${name}">+</button>
+             </div>`
+          : `<button type="button" class="btn-add" data-act="add" data-id="${id}" aria-label="Add ${name} to order">Add</button>`;
+      }
+
+
+      /* ======================================================================
+         RENDER: CART DRAWER
+         ====================================================================== */
+      function cartLinesHTML() {
+        return `<ul class="cart-lines">${cartIds().map(id => {
+          const item = ITEMS[id];
+          const line = state.cart[id];
+          return `
+            <li class="cart-line">
+              <div class="cart-line-head">
+                <span class="cart-line-name">${esc(item.name)}</span>
+                <span class="cart-line-price">${money(item.price * line.qty)}</span>
+              </div>
+              <input class="cart-line-note" type="text" maxlength="120" data-note="${id}"
+                     placeholder="Flavour / sauce / notes (optional)" value="${esc(line.note)}">
+              <div class="cart-line-foot">
+                <div class="qty">
+                  <button type="button" data-act="dec" data-id="${id}" aria-label="Remove one ${esc(item.name)}">&minus;</button>
+                  <output>${line.qty}</output>
+                  <button type="button" data-act="inc" data-id="${id}" aria-label="Add one ${esc(item.name)}">+</button>
+                </div>
+                <button type="button" class="cart-remove" data-act="remove" data-id="${id}">Remove</button>
+              </div>
+            </li>`;
+        }).join('')}</ul>`;
+      }
+
+      function checkoutHTML() {
+        const f = state.form;
+        const delivery = f.type === 'delivery';
+
+        return `
+          <form class="checkout-form" id="checkout-form" novalidate>
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required value="${esc(f.name)}">
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required minlength="8" value="${esc(f.phone)}">
+            </div>
+            <div class="field">
+              <fieldset>
+                <legend>Order type</legend>
+                <div class="choice-row">
+                  <label class="choice"><input type="radio" name="type" value="pickup" ${delivery ? '' : 'checked'}> Pickup</label>
+                  <label class="choice"><input type="radio" name="type" value="delivery" ${delivery ? 'checked' : ''}> Delivery</label>
+                </div>
+              </fieldset>
+            </div>
+            ${delivery ? `
+              <div class="field">
+                <label for="f-address">Delivery address</label>
+                <input id="f-address" name="address" type="text" autocomplete="street-address" required value="${esc(f.address)}">
+              </div>` : ''}
+            <div class="field">
+              <label for="f-notes">Order notes (optional)</label>
+              <textarea id="f-notes" name="notes">${esc(f.notes)}</textarea>
+            </div>
+
+            <ul class="checkout-summary">
+              ${cartIds().map(id => `
+                <li><span>${state.cart[id].qty} &times; ${esc(ITEMS[id].name)}</span><span>${money(ITEMS[id].price * state.cart[id].qty)}</span></li>`).join('')}
+            </ul>
+
+            ${state.error ? `<p class="cart-error" role="alert">${esc(state.error)}</p>` : ''}
+          </form>`;
+      }
+
+      function doneHTML() {
+        const o = state.order;
+        return `
+          <div class="cart-done">
+            <div class="cart-done-tick">&#10003;</div>
+            <h3>Order placed</h3>
+            <p>Thanks ${esc(o.customer.name)}! Your order number is <strong>${esc(o.id)}</strong>.</p>
+            <p>${o.type === 'delivery' ? 'Delivering to ' + esc(o.customer.address) : 'We will have it ready for pickup.'}</p>
+            <p>Total: <strong>${money(o.total)}</strong></p>
+          </div>`;
+      }
+
+      function renderCart() {
+        const body   = $('cart-body');
+        const footer = $('cart-footer');
+        const empty  = cartIds().length === 0;
+
+        $('cart-title').textContent =
+          state.view === 'checkout' ? 'Checkout' : state.view === 'done' ? 'Thank you' : 'Your order';
+
+        if (state.view === 'done') {
+          body.innerHTML = doneHTML();
+          footer.innerHTML = `<button type="button" class="btn-order" data-act="close-cart">Done</button>`;
+          return;
+        }
+
+        if (empty) {
+          body.innerHTML = `
+            <div class="cart-empty">
+              <p>Your order is empty.</p>
+              <button type="button" class="btn-add" data-act="close-cart">Browse the menu</button>
+            </div>`;
+          footer.innerHTML = '';
+          return;
+        }
+
+        if (state.view === 'checkout') {
+          body.innerHTML = checkoutHTML();
+          footer.innerHTML = `
+            <div class="cart-total"><span>Total</span><span>${money(cartTotal())}</span></div>
+            <button type="submit" form="checkout-form" class="btn-order" ${state.submitting ? 'disabled' : ''}>
+              ${state.submitting ? 'Placing order…' : 'Place order'}
+            </button>
+            <button type="button" class="btn-link" data-act="back">Back to order</button>`;
+          return;
+        }
+
+        body.innerHTML = cartLinesHTML();
+        footer.innerHTML = `
+          <div class="cart-total"><span>Subtotal</span><span>${money(cartTotal())}</span></div>
+          <button type="button" class="btn-order" data-act="checkout">Checkout</button>`;
+      }
+
+      function setDrawer(open) {
+        state.open = open;
+        $('cart').classList.toggle('open', open);
+        $('cart-overlay').classList.toggle('open', open);
+        $('cart').setAttribute('aria-hidden', String(!open));
+        document.body.style.overflow = open ? 'hidden' : '';
+
+        if (open) {
+          if (state.view === 'done') state.view = 'cart';
+          renderCart();
+          $('cart').querySelector('.cart-close').focus();
+        }
+      }
+
+
+      /* ======================================================================
+         CART ACTIONS
+         ====================================================================== */
+      function sync(changedId) {
+        saveCart();
+        $('cart-count').textContent = cartCount();
+        if (changedId) renderAction(changedId);
+        if (state.open) renderCart();
+      }
+
+      function changeQty(id, delta) {
+        const line = state.cart[id] || { qty: 0, note: '' };
+        const qty = Math.max(0, Math.min(99, line.qty + delta));
+
+        if (qty === 0) delete state.cart[id];
+        else state.cart[id] = { qty: qty, note: line.note };
+
+        sync(id);
+      }
+
+      function removeLine(id) {
+        delete state.cart[id];
+        sync(id);
+      }
+
+
+      /* ======================================================================
+         PLACE ORDER
+         ====================================================================== */
+      function buildOrder() {
+        const f = state.form;
+        return {
+          id: 'MOMO-' + Date.now().toString(36).toUpperCase().slice(-5),
+          createdAt: new Date().toISOString(),
+          type: f.type,
+          customer: {
+            name: f.name.trim(),
+            phone: f.phone.trim(),
+            address: f.type === 'delivery' ? f.address.trim() : ''
+          },
+          notes: f.notes.trim(),
+          items: cartIds().map(id => ({
+            id: id,
+            name: ITEMS[id].name,
+            qty: state.cart[id].qty,
+            unitPrice: ITEMS[id].price,
+            note: state.cart[id].note.trim()
+          })),
+          total: cartTotal()
+        };
+      }
+
+      async function placeOrder() {
+        const form = $('checkout-form');
+        state.error = '';
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const order = buildOrder();
+        state.submitting = true;
+        renderCart();
+
+        try {
+          if (CONFIG.ORDER_ENDPOINT) {
+            const res = await fetch(CONFIG.ORDER_ENDPOINT, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(order)
+            });
+            if (!res.ok) throw new Error('Server responded ' + res.status);
+          }
+
+          try { localStorage.setItem(CONFIG.LAST_ORDER_KEY, JSON.stringify(order)); } catch (e) { /* ignore */ }
+
+          const ids = cartIds();
+          state.cart = {};
+          state.order = order;
+          state.view = 'done';
+          state.submitting = false;
+          saveCart();
+          $('cart-count').textContent = 0;
+          ids.forEach(renderAction);
+          renderCart();
+        } catch (err) {
+          state.submitting = false;
+          state.error = 'Sorry, we could not send your order. Please try again.';
+          renderCart();
+        }
+      }
+
+
+      /* ======================================================================
+         EVENTS
+         ====================================================================== */
+      document.addEventListener('click', e => {
+        const el = e.target.closest('[data-act]');
+        if (!el) return;
+
+        const id = el.dataset.id;
+
+        switch (el.dataset.act) {
+          case 'add':        changeQty(id, 1);  break;
+          case 'inc':        changeQty(id, 1);  break;
+          case 'dec':        changeQty(id, -1); break;
+          case 'remove':     removeLine(id);    break;
+          case 'open-cart':  state.view = 'cart'; setDrawer(true); break;
+          case 'close-cart': setDrawer(false);  break;
+          case 'checkout':   state.view = 'checkout'; renderCart(); break;
+          case 'back':       state.view = 'cart'; state.error = ''; renderCart(); break;
+        }
+      });
+
+      // Typing in drawer fields updates state without re-rendering (keeps focus).
+      $('cart').addEventListener('input', e => {
+        const t = e.target;
+        if (t.dataset.note && state.cart[t.dataset.note]) {
+          state.cart[t.dataset.note].note = t.value;
+          saveCart();
+        } else if (t.name in state.form && t.type !== 'radio') {
+          state.form[t.name] = t.value;
+        }
+      });
+
+      // Switching pickup / delivery re-renders to show or hide the address field.
+      $('cart').addEventListener('change', e => {
+        if (e.target.name === 'type') {
+          state.form.type = e.target.value;
+          renderCart();
+        }
+      });
+
+      $('cart').addEventListener('submit', e => {
+        if (e.target.id === 'checkout-form') {
+          e.preventDefault();
+          placeOrder();
+        }
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && state.open) setDrawer(false);
+      });
+
+
+      /* ======================================================================
+         INIT
+         ====================================================================== */
+      loadCart();
+      renderMenu();
+      $('cart-count').textContent = cartCount();
+    })();
+  </script>
+
 </body>
 </html>
